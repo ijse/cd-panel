@@ -12,9 +12,9 @@ app.router = new Router()
 app.use(morgan('dev'))
 app.use(static('./dist'))
 
-app.use(app.router.routes())
-
 // load services
 require('./repo').call(app, app)
+
+app.use(app.router.routes())
 
 module.exports = app
