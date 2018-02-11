@@ -1,8 +1,11 @@
 const dbManager = require('../db')
-const db = dbManager.getInstance('repo')
+const db = dbManager.getInstance('setting')
 
 // schema
 const defaults = {
+  repo: null,
+  master: 'master',
+
   callTimes: 0
 }
 
@@ -20,5 +23,8 @@ module.exports = {
   },
   get state () {
     return db.getState()
+  },
+  set state (data) {
+    db.setState(data)
   }
 }

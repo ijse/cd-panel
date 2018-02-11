@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App'
+import axios from 'axios'
 import Router from 'vue-router'
 import routes from './routes'
 
@@ -7,6 +8,12 @@ Vue.use(Router)
 const router = new Router({
   mode: 'history',
   routes
+})
+
+Vue.use({
+  install (Vue) {
+    Vue.prototype.$http = axios
+  }
 })
 
 window.app = new Vue({

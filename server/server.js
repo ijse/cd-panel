@@ -4,6 +4,7 @@ const Koa = require('koa')
 const static = require('koa-static')
 const morgan = require('koa-morgan')
 const Router = require('koa-router')
+const bodyParser = require('koa-bodyparser')
 
 const app = new Koa()
 
@@ -13,14 +14,22 @@ app.router = new Router()
 app.use(morgan('dev'))
 app.use(static('./dist'))
 
-// load services
-require('./repo').call(app, app)
+app.use(bodyParser())
 
 // fallback
-app.router.get('/*', async ctx => {
-  ctx.response.type = 'html'
-  ctx.body = fs.createReadStream('./dist/index.html')
+app.router.get('/*', async (ctx, next) => {
+  console.log('>>', ctx.accepts('html', 'json'))
+  if (ctx.accepts('html', 'json') !== 'json') {
+    ctx.response.type = 'html'
+    ctx.body = fs.createReadStream('./dist/index.html')
+  } else {
+    next()
+  }
 })
+
+// load services
+require('./setting').call(app, app)
+
 app.use(app.router.routes())
 
 
