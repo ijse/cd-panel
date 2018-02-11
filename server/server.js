@@ -1,4 +1,5 @@
 const config = require('config')
+const fs = require('fs')
 const Koa = require('koa')
 const static = require('koa-static')
 const morgan = require('koa-morgan')
@@ -15,6 +16,12 @@ app.use(static('./dist'))
 // load services
 require('./repo').call(app, app)
 
+// fallback
+app.router.get('/*', async ctx => {
+  ctx.response.type = 'html'
+  ctx.body = fs.createReadStream('./dist/index.html')
+})
 app.use(app.router.routes())
+
 
 module.exports = app

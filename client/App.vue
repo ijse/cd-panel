@@ -1,8 +1,10 @@
 <template>
-  <div id="app">
+  <section id="app">
     <NavBar></NavBar>
-    <h1 class="title">{{ msg }}</h1>
-  </div>
+    <div class="container">
+      <router-view></router-view>
+    </div>
+  </section>
 </template>
 
 <script>

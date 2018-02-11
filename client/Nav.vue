@@ -1,13 +1,15 @@
 <template>
   <div class="navbar">
     <div class="navbar-brand">
-      <h1 class="navbar-item">
-        <span> CDPanel </span>
-      </h1>
+      <router-link to="/" class="navbar-item">
+        CDPanel
+      </router-link>
     </div>
     <div class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item" href> PRList </a>
+        <router-link to="/mr" class="navbar-item"> MR </router-link>
+        <router-link to="/backlog" class="navbar-item"> Backlog </router-link>
+        <router-link to="/setting" class="navbar-item"> Setting </router-link>
       </div>
     </div>
   </div>

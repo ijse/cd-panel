@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "start": "npm run dev",
-    "dev": "npm run dev:client | npm run dev:server",
+    "dev": "npm run dev:server 2>&1 & npm run dev:client",
     "dev:server": "nodemon -w ./server server/start.js",
     "dev:client": "parcel watch --public-url / client/index.html",
     "build": "parcel build --public-url / client/index.html",
