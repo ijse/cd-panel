@@ -1,7 +1,12 @@
 <template>
-  <section id="app">
+  <section class="app">
     <NavBar></NavBar>
     <div class="container">
+      <div class="level">
+        <div class="level-left level-item">
+          <h1 class="title"> {{ $route.name }} </h1>
+        </div>
+      </div>
       <router-view></router-view>
     </div>
   </section>

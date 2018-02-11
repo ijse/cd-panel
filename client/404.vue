@@ -9,9 +9,12 @@
   export default {
     name: 'Page404',
     created () {
-      window.setTimeout(() => {
+      this.timer = window.setTimeout(() => {
         this.$router.replace('/')
       }, 2000)
+    },
+    beforeDestroy () {
+      window.clearTimeout(this.timer)
     }
   }
 </script>
