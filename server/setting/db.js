@@ -26,5 +26,6 @@ module.exports = {
   },
   set state (data) {
     db.setState(data)
+    db.write()
   }
 }
