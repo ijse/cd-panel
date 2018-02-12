@@ -18,7 +18,6 @@ app.use(bodyParser())
 
 // fallback
 app.router.get('/*', async (ctx, next) => {
-  console.log('>>', ctx.accepts('html', 'json'))
   if (ctx.accepts('html', 'json') !== 'json') {
     ctx.response.type = 'html'
     ctx.body = fs.createReadStream('./dist/index.html')

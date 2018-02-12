@@ -1,6 +1,6 @@
 <template>
   <div class="setting">
-    <Field label="Git Repository URL">
+    <Field label="GitHub Repository">
       <input class="input" type="url" placeholder="Git Url" v-model="setting.repo"/>
     </Field>
     <Field label="Master Branch">
