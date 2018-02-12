@@ -22,14 +22,14 @@ app.router.get('/*', async (ctx, next) => {
     ctx.response.type = 'html'
     ctx.body = fs.createReadStream('./dist/index.html')
   } else {
-    next()
+    await next()
   }
 })
 
 // load services
 require('./setting').call(app, app)
+require('./mr').call(app, app)
 
 app.use(app.router.routes())
-
 
 module.exports = app
