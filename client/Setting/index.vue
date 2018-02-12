@@ -1,5 +1,10 @@
 <template>
   <div class="setting">
+    <Field label="Hook URL">
+      <input class="input has-text-dark" type="text" :value="hookUrl"
+      @keydown.prevent @click.prevent.stop
+      onmouseover="this.select()"/>
+    </Field>
     <Field label="GitHub Repository">
       <input class="input" type="url" placeholder="Git Url" v-model="setting.repo"/>
     </Field>
@@ -25,6 +30,11 @@
       isLoading: false,
       setting: {}
     }),
+    computed: {
+      hookUrl () {
+        return `${location.protocol}://${location.host}/hook`
+      }
+    },
     created () {
       this.load()
     },
