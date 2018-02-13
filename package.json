@@ -11,6 +11,8 @@
     "dev:server": "nodemon -w ./server server/start.js",
     "dev:client": "parcel watch --public-url / client/index.html",
     "build": "parcel build --public-url / client/index.html",
+    "test": "npm run test:server",
+    "test:server": "mocha server/**/*test.js",
     "clean": "rimraf .cache dist"
   },
   "browserslist": [
@@ -23,7 +25,10 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-3": "^6.24.1",
     "cross-env": "^5.0.5",
+    "intelli-espower-loader": "^1.0.1",
+    "mocha": "^5.0.0",
     "parcel-bundler": "parcel-bundler/parcel#vue",
+    "power-assert": "^1.4.4",
     "rimraf": "^2.6.2",
     "vue": "^2.5.13",
     "vue-router": "^3.0.1",
