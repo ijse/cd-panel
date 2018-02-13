@@ -15,7 +15,7 @@
           <td>{{ mr.user.login }}</td>
           <td>{{ mr.status }}</td>
           <td>
-            <DeployButton :targetList="['111','222','333']"></DeployButton>
+            <DeployButton></DeployButton>
           </td>
         </tr>
       </tbody>
