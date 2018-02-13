@@ -12,8 +12,8 @@
     "dev:client": "parcel watch --public-url / client/index.html",
     "build": "parcel build --public-url / client/index.html",
     "test": "npm run test:server",
-    "test:server": "mocha server/**/*test.js",
-    "clean": "rimraf .cache dist"
+    "test:server": "NODE_CONFIG_ENV=test mocha server/**/*test.js",
+    "clean": "rimraf .cache dist .test"
   },
   "browserslist": [
     "> 1%",
