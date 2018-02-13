@@ -5,11 +5,15 @@ const fs = require('fs')
 const shelljs = require('shelljs')
 const config = require('config')
 
+const isFileExist = file => new Promise(resolve => {
+  fs.access(file, err => resolve(!err))
+})
+
 describe('server/build', () => {
-  const createBuild = require('./createBuild.js')
+  const Build = require('./Build.js')
 
   const pr = {
-    number: 102,
+    number: 100,
     head: {
       ref: 'master',
       repo: {
@@ -17,23 +21,21 @@ describe('server/build', () => {
       }
     }
   }
-  const workspace = join(config.get('workDir'), '100')
+  const workspace = join(config.get('workDir'), '' + pr.number)
 
   before(() => {
-    createBuild(pr)
+    this.build = new Build(pr)
   })
 
-  it('should create workspace directory', done => {
-    fs.access(workspace, fs.constants.R_OK, err => {
-      assert.ifError(err)
-      done(err)
-    })
+  it('should create workspace directory', async () => {
+    this.build.ensureWorkspace()
+    const exist = await isFileExist(workspace)
+    assert(exist)
   })
 
-  it('should have project cloned in workspace', done => {
-    fs.access(join(workspace, '.git'), fs.constants.R_OK, err => {
-      assert.ifError(err)
-      done(err)
-    })
+  it('should have project cloned in workspace', async () => {
+    await this.build.update()
+    const exist = await isFileExist(join(workspace, '.git'))
+    assert(exist)
   })
 })
