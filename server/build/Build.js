@@ -2,9 +2,19 @@ const { join } = require('path')
 const fs = require('fs')
 const config = require('config')
 const shelljs = require('shelljs')
+const github = require('../github')
 
 const workDir = config.get('workDir')
 
+/**
+ * processes:
+ *   - mkdir -p $workspace
+ *   - git clone | git pull
+ *   - npm install | yarn
+ *   - npm run build
+ *   - npm run release
+ *   - merge branch
+ */
 class Build {
   constructor (pr) {
     this.pr = pr
@@ -13,7 +23,7 @@ class Build {
     this.number = pr.number
     this.workspace = join(workDir, '' + this.number)
 
-    // init|waiting|installing|building|ready|error
+    // waiting|init|installing|building|ready|error
     this.stats = 'init'
     this.ensureWorkspace()
   }
@@ -64,6 +74,11 @@ class Build {
   runBuild () {
     shelljs.cd(this.workspace)
     return this.exec('npm run build')
+  }
+
+  runRelease () {
+    shelljs.cd(this.workspace)
+    return this.exec('npm run release')
   }
 }
 

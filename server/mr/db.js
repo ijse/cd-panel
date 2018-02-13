@@ -2,7 +2,7 @@ const db = require('../db').getInstance('mr')
 
 /*
 mr = {
-  buildStats: halt|building|ready|deploying
+  buildStats: waiting|init|installing|building|ready|error
 }
 */
 
@@ -22,7 +22,7 @@ module.exports = {
       const old = curList.find(t => t.number === item.number) || {}
 
       // merge with old
-      item.buildStats = old.buildStats || 'halt'
+      item.buildStats = old.buildStats || 'waiting'
       return item
     })
     db.set('list', newList).write()
