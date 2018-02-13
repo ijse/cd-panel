@@ -13,9 +13,12 @@
         <tr v-for="mr in list">
           <td>#{{ mr.number }} {{ mr.title }}</td>
           <td>{{ mr.user.login }}</td>
-          <td>{{ mr.status }}</td>
+          <td>
+            <BuildStats :stats="mr.buildstats"></BuildStats>
+          </td>
           <td>
             <DeployButton></DeployButton>
+            <ReleaseButton></ReleaseButton>
           </td>
         </tr>
       </tbody>
@@ -24,11 +27,15 @@
 </template>
 <script>
   import DeployButton from './DeployButton'
+  import ReleaseButton from './ReleaseButton'
+  import BuildStats from './BuildStats'
 
   export default {
     name: 'MRList',
     components: {
-      DeployButton
+      DeployButton,
+      ReleaseButton,
+      BuildStats
     },
     data: () => ({
       list: []
