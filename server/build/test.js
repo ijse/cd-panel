@@ -41,12 +41,18 @@ describe('server/build', function () {
 
   it('should install project dependences by creating node_modules', done => {
     this.build.installDeps()
-    // wait 3sec to check node_modules folder exist
     setTimeout(async () => {
       const exist = await isFileExist(join(workspace, 'node_modules'))
       assert(exist)
-      this.build.worker.kill()
+      this.build.kill()
       done()
-    }, 3000)
+    }, 2000)
+  })
+
+  it('should successful call npm command', async () => {
+    this.build.exec('npm version > /dev/null')
+    assert.ok(this.build.worker)
+    this.build.kill()
+    assert.ok(!this.build.worker)
   })
 })
