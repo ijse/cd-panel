@@ -11,6 +11,9 @@
     <Field label="Master Branch">
       <input class="input" type="text" placeholder="master" v-model="setting.master"/>
     </Field>
+    <Field label="Deploy Types">
+      <input class="input" type="text" placeholder="nightly,test,staging" v-model="setting.deployTypes"/>
+    </Field>
     <Field>
       <button class="button is-primary"
         :class="{ 'is-loading': isLoading }"

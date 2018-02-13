@@ -14,15 +14,22 @@
           <td>#{{ mr.number }} {{ mr.title }}</td>
           <td>{{ mr.user.login }}</td>
           <td>{{ mr.status }}</td>
-          <td></td>
+          <td>
+            <DeployButton :targetList="['111','222','333']"></DeployButton>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
 </template>
 <script>
+  import DeployButton from './DeployButton'
+
   export default {
     name: 'MRList',
+    components: {
+      DeployButton
+    },
     data: () => ({
       list: []
     }),
