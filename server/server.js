@@ -1,3 +1,4 @@
+require('promise.prototype.finally')
 const config = require('config')
 const fs = require('fs')
 const Koa = require('koa')
