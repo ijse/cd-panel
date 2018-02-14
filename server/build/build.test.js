@@ -9,7 +9,7 @@ const isFileExist = file => new Promise(resolve => {
   fs.access(file, err => resolve(!err))
 })
 
-describe('server/build', function () {
+describe('server/build/build', function () {
   this.timeout(5000)
   const Build = require('./Build.js')
 

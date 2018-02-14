@@ -25,15 +25,16 @@ class Build {
 
     // waiting|init|installing|building|ready|error
     this.stats = 'init'
-    this.ensureWorkspace()
+    shelljs.mkdir('-p', this.workspace)
   }
 
-  exec (cmd) {
+  exec (cmd, opts = {}) {
     if (this.worker) {
       this.kill()
     }
     return new Promise(resolve => {
-      this.worker = shelljs.exec(cmd, resolve)
+      shelljs.cd(this.workspace)
+      this.worker = shelljs.exec(cmd, opts, resolve)
       return this.worker
     })
     .catch(() => this.stats = 'error')
@@ -47,13 +48,7 @@ class Build {
     }
   }
 
-  ensureWorkspace () {
-    shelljs.mkdir('-p', this.workspace)
-  }
-
   async update () {
-    // const curFiles = shelljs.ls('.git')
-    shelljs.cd(this.workspace)
     const notExist = await new Promise(resolve => {
       fs.access(join(this.workspace, '.git'), resolve)
     })
@@ -64,20 +59,21 @@ class Build {
   }
 
   installDeps () {
-    shelljs.cd(this.workspace)
     const hasYarn = shelljs.which('yarn')
     const cmd = hasYarn ? 'yarn' : 'npm install'
 
     return this.exec(cmd)
   }
 
+  setEnv (value) {
+    Object.assign(shelljs.env, value)
+  }
+
   runBuild () {
-    shelljs.cd(this.workspace)
     return this.exec('npm run build')
   }
 
   runRelease () {
-    shelljs.cd(this.workspace)
     return this.exec('npm run release')
   }
 }
