@@ -1,3 +1,4 @@
+const service = require('./service')
 
 module.exports = function () {
   this.router.get('/hook', async ctx => {

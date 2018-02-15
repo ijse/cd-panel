@@ -1,11 +1,10 @@
 const db = require('../db').getInstance('queue')
 
 /**
- * task: {
+ * task: [
  *    pr,
- *    cmd,
- *    running
- * }
+ *    [ step, args]
+ * ]
  */
 db.defaults({
   queue: []

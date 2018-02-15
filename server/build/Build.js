@@ -7,6 +7,12 @@ const github = require('../github')
 const workDir = config.get('workDir')
 
 /**
+ * Steps:
+ * 1. download
+ * 2. prepare
+ * 3. build
+ * 4. release
+ *
  * processes:
  *   - mkdir -p $workspace
  *   - git clone | git pull
@@ -16,6 +22,11 @@ const workDir = config.get('workDir')
  *   - merge branch
  */
 class Build {
+  static runTask ([pr, [step, ...args]]) {
+    const build = new Build(pr)
+    return build[step](...args)
+  }
+
   constructor (pr) {
     this.pr = pr
     this.repoUrl = pr.head.repo.clone_url
@@ -38,7 +49,10 @@ class Build {
       return this.worker
     })
     .catch(() => this.stats = 'error')
-    .then(() => this.worker = null)
+    .then((code, stdout, stderr) => {
+      this.worker = null
+      return [ code, stdout, stderr ]
+    })
   }
 
   kill () {
@@ -48,20 +62,19 @@ class Build {
     }
   }
 
-  async update () {
-    const notExist = await new Promise(resolve => {
-      fs.access(join(this.workspace, '.git'), resolve)
-    })
-    const cmd = notExist ?
+  download () {
+    const repoExist = shelljs.test('-d', join(this.workspace, '.git'))
+    const cmd = !repoExist ?
       `git clone --depth=1 --single-branch -b ${this.branch} ${this.repoUrl} .`
       : `git pull`
     return this.exec(cmd)
   }
 
-  installDeps () {
+  prepare (env) {
     const hasYarn = shelljs.which('yarn')
     const cmd = hasYarn ? 'yarn' : 'npm install'
 
+    this.setEnv(env)
     return this.exec(cmd)
   }
 
@@ -70,12 +83,12 @@ class Build {
     return Promise.resolve()
   }
 
-  runBuild () {
+  build () {
     return this.exec('npm run build')
   }
 
-  runRelease () {
-    return this.exec('npm run release')
+  release (target) {
+    return this.exec(`TARGET=${target} npm run release`)
   }
 }
 

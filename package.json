@@ -14,7 +14,8 @@
     "test": "npm run test:server",
     "mocha": "rimraf .test && NODE_CONFIG_ENV=test mocha",
     "test:server": "npm run mocha -- server/**/*test.js",
-    "clean": "rimraf .cache dist .test"
+    "clean": "rimraf .cache dist .test",
+    "release": "echo release to ${TARGET} ok"
   },
   "browserslist": [
     "> 1%",

@@ -34,13 +34,13 @@ describe('server/build/build', function () {
   })
 
   it('should have project cloned in workspace', async () => {
-    await this.build.update()
+    await this.build.download()
     const exist = await isFileExist(join(workspace, '.git'))
     assert(exist)
   })
 
   it('should install project dependences by creating node_modules', done => {
-    this.build.installDeps()
+    this.build.prepare()
     setTimeout(async () => {
       const exist = await isFileExist(join(workspace, 'node_modules'))
       assert(exist)
