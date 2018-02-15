@@ -11,9 +11,15 @@ const tick = async () => {
   if (!task) return
 
   // run next task
-  const rep = await Build.runTask(task)
-  queue.finish(task)
-  tick()
+  queue.current.promise = Build.runTask(task)
+    .then(() => {
+      queue.finish(task, true)
+    })
+    .catch(() => {
+      queue.finish(task, false)
+    })
+    // always call next tick()
+    .then(tick)
 }
 
 exports.createBuild = async pr => {
@@ -25,6 +31,7 @@ exports.createBuild = async pr => {
 
 exports.makeRelease = async (pr, target) => {
   queue.append([pr, ['release', target]])
+  tick()
 }
 
 exports.tick = tick

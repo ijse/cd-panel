@@ -1,4 +1,5 @@
 const db = require('../db').getInstance('queue')
+const Emitter = require('events')
 
 /**
  * task: [
@@ -10,35 +11,43 @@ db.defaults({
   queue: []
 }).write()
 
-const queue = {
-  // current handling task
-  // when task done, remove from queue
-  current: null,
+class Queue extends Emitter {
+  constructor () {
+    super()
+    this.current = null
+  }
 
   get list () {
     return db.get('queue').value()
-  },
+  }
 
   append (task) {
     db.get('queue').insert(task).write()
-  },
+    this.emit('append', task)
+  }
 
   startNext () {
     this.current = this.list[0]
+    this.emit('start', this.current)
     return this.current
-  },
+  }
 
   // when task finish, remove from queue
-  finish (task) {
+  finish (task, success = true) {
     db.get('queue')
       .remove(x => x.id === task.id)
       .write()
+
+    this.emit('finish', task, success)
+    if (this.list.length === 0) {
+      this.emit('empty')
+    }
     this.current = null
-  },
+  }
 
   clear () {
     db.set('queue', []).write()
   }
 }
 
-module.exports = queue
+module.exports = new Queue()

@@ -13,15 +13,7 @@ describe('server/build/build', function () {
   this.timeout(5000)
   const Build = require('./Build.js')
 
-  const pr = {
-    number: 100,
-    head: {
-      ref: 'master',
-      repo: {
-        clone_url: join(__dirname, '../..')
-      }
-    }
-  }
+  const pr = require('app/test/pr')
   const workspace = join(config.get('workDir'), '' + pr.number)
 
   before(() => {
@@ -40,13 +32,11 @@ describe('server/build/build', function () {
   })
 
   it('should install project dependences by creating node_modules', done => {
-    this.build.prepare()
-    setTimeout(async () => {
-      const exist = await isFileExist(join(workspace, 'node_modules'))
+    this.build.prepare().then(() => {
+      const exist = shelljs.test('-d', join(workspace, 'node_modules'))
       assert(exist)
-      this.build.kill()
       done()
-    }, 2000)
+    })
   })
 
   it('should successful call npm command', async () => {

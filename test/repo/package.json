@@ -1,0 +1,12 @@
+{
+  "name": "repo",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "mkdir dist",
+    "release": "echo $TARGET > dist/release"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "left-padding": "^1.0.0"
+  }
+}

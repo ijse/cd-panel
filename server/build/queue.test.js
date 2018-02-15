@@ -44,4 +44,8 @@ describe('server/build/queue', function () {
     assert.equal(db.list.length, 1)
     assert.equal(db.list[0].name, 'task2')
   })
+
+  after(() => {
+    db.clear()
+  })
 })
