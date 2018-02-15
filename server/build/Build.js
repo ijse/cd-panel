@@ -67,6 +67,7 @@ class Build {
 
   setEnv (value) {
     Object.assign(shelljs.env, value)
+    return Promise.resolve()
   }
 
   runBuild () {
