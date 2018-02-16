@@ -11,8 +11,15 @@ describe('server/mr', function () {
   })
 
   it('should update pr status', () => {
-    assert.equal(db.list[0].buildStats, 'waiting')
+    assert.equal(db.list[0].buildStats, 'halt')
     db.updateStatus(pr, 'download')
     assert.equal(db.list[0].buildStats, 'download')
+  })
+
+  it('should find the mr', () => {
+    const result1 = db.find(pr.number)
+    assert.equal(result1.number, pr.number)
+    const result2 = db.find(123)
+    assert.equal(result2, null)
   })
 })

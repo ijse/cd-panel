@@ -34,8 +34,6 @@ class Build {
     this.number = pr.number
     this.workspace = join(workDir, '' + this.number)
 
-    // waiting|init|installing|building|ready|error
-    this.stats = 'init'
     shelljs.mkdir('-p', this.workspace)
   }
 
@@ -48,7 +46,6 @@ class Build {
       this.worker = shelljs.exec(cmd, opts, resolve)
       return this.worker
     })
-    .catch(() => this.stats = 'error')
     .then((code, stdout, stderr) => {
       this.worker = null
       return [ code, stdout, stderr ]
@@ -70,7 +67,7 @@ class Build {
     return this.exec(cmd)
   }
 
-  prepare (env) {
+  prepare (env = {}) {
     const hasYarn = shelljs.which('yarn')
     const cmd = hasYarn ? 'yarn' : 'npm install'
 

@@ -19,6 +19,11 @@ module.exports = {
       .set('buildStats', stats)
       .write()
   },
+  find (number) {
+    return db.get('list')
+      .find({ number })
+      .value()
+  },
   get list () {
     return db.get('list').value()
   },
@@ -28,7 +33,7 @@ module.exports = {
       const old = curList.find(t => t.number === item.number) || {}
 
       // merge with old
-      item.buildStats = old.buildStats || 'waiting'
+      item.buildStats = old.buildStats || 'halt'
       return item
     })
     db.set('list', newList).write()

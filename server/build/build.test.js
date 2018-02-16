@@ -1,13 +1,8 @@
 const { join } = require('path')
 const assert = require('assert')
-const fs = require('fs')
 
 const shelljs = require('shelljs')
 const config = require('config')
-
-const isFileExist = file => new Promise(resolve => {
-  fs.access(file, err => resolve(!err))
-})
 
 describe('server/build/build', function () {
   this.timeout(5000)
@@ -20,23 +15,19 @@ describe('server/build/build', function () {
     this.build = new Build(pr)
   })
 
-  it('should create workspace directory', async () => {
-    const exist = await isFileExist(workspace)
-    assert(exist)
+  it('should create workspace directory', () => {
+    assert.ok(shelljs.test('-d', workspace))
   })
 
   it('should have project cloned in workspace', async () => {
     await this.build.download()
-    const exist = await isFileExist(join(workspace, '.git'))
-    assert(exist)
+    assert.ok(shelljs.test('-d', join(workspace, '.git')))
   })
 
-  it('should install project dependences by creating node_modules', done => {
-    this.build.prepare().then(() => {
-      const exist = shelljs.test('-d', join(workspace, 'node_modules'))
-      assert(exist)
-      done()
-    })
+  it('should install project dependences by creating node_modules', async () => {
+    await this.build.prepare()
+    const exist = shelljs.test('-d', join(workspace, 'node_modules'))
+    assert.ok(exist)
   })
 
   it('should successful call npm command', async () => {

@@ -14,9 +14,10 @@
           <td>#{{ mr.number }} {{ mr.title }}</td>
           <td>{{ mr.user.login }}</td>
           <td>
-            <BuildStats :stats="mr.buildstats"></BuildStats>
+            <BuildStats :stats="mr.buildStats"></BuildStats>
           </td>
           <td>
+            <RedoButton :mr="mr"></RedoButton>
             <DeployButton></DeployButton>
             <ReleaseButton></ReleaseButton>
           </td>
@@ -29,12 +30,14 @@
   import DeployButton from './DeployButton'
   import ReleaseButton from './ReleaseButton'
   import BuildStats from './BuildStats'
+  import RedoButton from './RedoButton'
 
   export default {
     name: 'MRList',
     components: {
       DeployButton,
       ReleaseButton,
+      RedoButton,
       BuildStats
     },
     data: () => ({
