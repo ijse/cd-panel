@@ -1,5 +1,6 @@
 require('promise.prototype.finally')
 const config = require('config')
+const { join } = require('path')
 const fs = require('fs')
 const Koa = require('koa')
 const static = require('koa-static')
@@ -21,7 +22,8 @@ app.use(bodyParser())
 app.router.get('/*', async (ctx, next) => {
   if (ctx.accepts('html', 'json') !== 'json') {
     ctx.response.type = 'html'
-    ctx.body = fs.createReadStream('./dist/index.html')
+    const indexFile = join(__dirname, '../dist/index.html')
+    ctx.body = fs.createReadStream(indexFile)
   } else {
     await next()
   }

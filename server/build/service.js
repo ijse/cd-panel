@@ -18,7 +18,7 @@ const setStatus = (type, [pr, [ step ]]) => {
     }
   }
   if (type === 'fail') {
-    return queue.updateStatus(pr, 'Error')
+    return mr.updateStatus(pr, 'Error')
   }
   const stats = map[type][step]
   return mr.updateStatus(pr, stats)

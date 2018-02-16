@@ -1,6 +1,6 @@
 <template>
   <a class="button" @click="restart()"
-    :disable="isDisabled">
+    :disabled="isDisabled">
     <span class="icon is-small">
       <i class="fas fa-redo"></i>
     </span>
@@ -20,6 +20,7 @@
     },
     methods: {
       async restart () {
+        if (this.isDisabled) return
         const newPr = await this.$http
           .post('/build/restart', {
             number: this.mr.number

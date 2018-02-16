@@ -16,6 +16,8 @@
           'halt': 'is-white',
           'Waiting': 'is-warning',
           'Downloading': 'is-warning',
+          'Processing': 'is-warning',
+          'Error': 'is-danger',
           'Ready': 'is-success'
         }
         return statsMap[this.stats]

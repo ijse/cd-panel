@@ -48,7 +48,8 @@ class Build {
     })
     .then((code, stdout, stderr) => {
       this.worker = null
-      return [ code, stdout, stderr ]
+      if (code !== 0) throw new Error(stderr)
+      return stdout
     })
   }
 
