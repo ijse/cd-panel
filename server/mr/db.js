@@ -13,6 +13,12 @@ const defaults = {
 db.defaults(defaults).write()
 
 module.exports = {
+  updateStatus (pr, stats) {
+    db.get('list')
+      .find({ number: pr.number })
+      .set('buildStats', stats)
+      .write()
+  },
   get list () {
     return db.get('list').value()
   },
