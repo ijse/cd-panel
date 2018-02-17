@@ -5,6 +5,7 @@ const assert = require('assert')
 const queue = require('./queue')
 
 describe('server/build/service', function () {
+  const mr = require('app/server/mr/db')
   const pr = require('app/test/pr')
 
   const service = require('./service')
@@ -12,7 +13,14 @@ describe('server/build/service', function () {
   const workspace = join(config.get('workDir'), '' + pr.number)
 
   this.timeout(10000)
+
+  before(() => {
+    mr.list = [ pr ]
+  })
+
   it('should create build and run queue', done => {
+    service.createBuild(pr.number)
+
     queue.once('empty', () => {
       // check dependences installed
       assert.ok(shelljs.test('-d', join(workspace, 'node_modules')))
@@ -21,12 +29,10 @@ describe('server/build/service', function () {
 
       done()
     })
-
-    service.createBuild(pr)
   })
 
   it('should run release', done => {
-    service.makeRelease(pr, 'test')
+    service.makeRelease(pr.number, 'test')
     queue.once('empty', () => {
       const str = shelljs.cat(join(workspace, 'dist/release')).toString()
       assert.equal(str, 'test\n')

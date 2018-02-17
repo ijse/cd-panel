@@ -13,15 +13,15 @@ const defaults = {
 db.defaults(defaults).write()
 
 module.exports = {
-  updateStatus (pr, stats) {
+  updateStatus (number, stats) {
     db.get('list')
-      .find({ number: pr.number })
+      .find({ number })
       .set('buildStats', stats)
       .write()
   },
-  find (number) {
+  find (crit) {
     return db.get('list')
-      .find({ number })
+      .find(crit)
       .value()
   },
   get list () {

@@ -4,6 +4,7 @@ const config = require('config')
 const shelljs = require('shelljs')
 const github = require('../github')
 
+const mr = require('app/server/mr/db')
 const workDir = config.get('workDir')
 
 /**
@@ -22,7 +23,8 @@ const workDir = config.get('workDir')
  *   - merge branch
  */
 class Build {
-  static runTask ([pr, [step, ...args]]) {
+  static runTask ([number, [step, ...args]]) {
+    const pr = mr.find({ number })
     const build = new Build(pr)
     return build[step](...args)
   }

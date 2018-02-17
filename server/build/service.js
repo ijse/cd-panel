@@ -2,7 +2,7 @@ const queue = require('./queue')
 const Build = require('./Build')
 const mr = require('app/server/mr/db')
 
-const setStatus = (type, [pr, [ step ]]) => {
+const setStatus = (type, [number, [ step ]]) => {
   const map = {
     start: {
       download: 'Downloading',
@@ -18,10 +18,10 @@ const setStatus = (type, [pr, [ step ]]) => {
     }
   }
   if (type === 'fail') {
-    return mr.updateStatus(pr, 'Error')
+    return mr.updateStatus(number, 'Error')
   }
   const stats = map[type][step]
-  return mr.updateStatus(pr, stats)
+  return mr.updateStatus(number, stats)
 }
 
 const tick = async () => {
@@ -47,17 +47,17 @@ const tick = async () => {
     .then(tick)
 }
 
-exports.createBuild = async pr => {
-  queue.append([pr, ['download']])
-  queue.append([pr, ['prepare']])
-  queue.append([pr, ['build']])
-  mr.updateStatus(pr, 'Waiting')
+exports.createBuild = async number => {
+  queue.append([number, ['download']])
+  queue.append([number, ['prepare']])
+  queue.append([number, ['build']])
+  mr.updateStatus(number, 'Waiting')
   tick()
   return pr
 }
 
-exports.makeRelease = async (pr, target) => {
-  queue.append([pr, ['release', target]])
+exports.makeRelease = async (number, target) => {
+  queue.append([number, ['release', target]])
   tick()
 }
 
