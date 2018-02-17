@@ -18,7 +18,7 @@
           </td>
           <td>
             <RedoButton :mr="mr"></RedoButton>
-            <DeployButton></DeployButton>
+            <DeployButton :setting="setting"></DeployButton>
             <ReleaseButton></ReleaseButton>
           </td>
         </tr>
@@ -41,15 +41,21 @@
       BuildStats
     },
     data: () => ({
-      list: []
+      list: [],
+      setting: {}
     }),
     created () {
-      this.load()
+      this.loadList()
+      this.loadSetting()
     },
     methods: {
-      async load () {
+      async loadList () {
         const resp = await this.$http.get('/mr')
         this.list = resp.data
+      },
+      async loadSetting () {
+        const resp = await this.$http.get('/setting')
+        this.setting = resp.data
       }
     }
   }

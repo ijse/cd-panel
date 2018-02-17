@@ -24,23 +24,23 @@
 <script>
   export default {
     name: 'DeployButton',
+    props: {
+      setting: Object
+    },
     data: () => ({
-      isActive: false,
-      targetList: []
+      isActive: false
     }),
     computed: {
+      targetList () {
+        if (this.setting.deployTypes) {
+          return this.setting.deployTypes.split(',')
+        }
+      },
       isEmpty () {
         return !this.targetList || this.targetList.length < 1
       }
     },
-    created () {
-      this.loadSetting()
-    },
     methods: {
-      async loadSetting () {
-        const setting = await this.$getSetting()
-        this.targetList = setting.deployTypes.split(',')
-      },
       doDeploy (target) {
         // todo: trigger deploy action
       }

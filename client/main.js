@@ -16,15 +16,6 @@ Vue.use({
   }
 })
 
-Vue.use({
-  install (Vue) {
-    Vue.prototype.$getSetting = async () => {
-      const resp = await axios.get('/setting')
-      return resp.data
-    }
-  }
-})
-
 window.app = new Vue({
   el: '#app',
   router,
