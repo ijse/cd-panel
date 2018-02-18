@@ -33,7 +33,7 @@ module.exports = {
       const old = curList.find(t => t.number === item.number) || {}
 
       // merge with old
-      item.buildStats = old.buildStats || 'halt'
+      item.buildStats = old.buildStats || 'Halt'
       return item
     })
     db.set('list', newList).write()
