@@ -14,6 +14,7 @@
     <div class="dropdown-menu">
       <div class="dropdown-content">
         <a href class="dropdown-item" v-for="target in targetList"
+          :disabled="disabled"
           @click.prevent="doDeploy(target)">
           {{ target }}
         </a>
@@ -25,7 +26,8 @@
   export default {
     name: 'DeployButton',
     props: {
-      setting: Object
+      setting: Object,
+      disabled: Boolean
     },
     data: () => ({
       isActive: false
@@ -35,7 +37,7 @@
         if (this.setting.deployTypes) {
           return this.setting.deployTypes.split(',')
         }
-      },
+       },
       isEmpty () {
         return !this.targetList || this.targetList.length < 1
       }
@@ -47,3 +49,9 @@
     }
   }
 </script>
+<style scoped>
+  .dropdown-item[disabled] {
+    color: grey;
+    pointer-events: none;
+  }
+</style>

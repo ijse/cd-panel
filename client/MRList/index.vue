@@ -17,8 +17,10 @@
             <BuildStats :stats="mr.buildStats"></BuildStats>
           </td>
           <td>
-            <RedoButton :mr="mr"></RedoButton>
-            <DeployButton :setting="setting"></DeployButton>
+            <RedoButton :disabled="!['Error', 'Halt'].includes(mr.buildStats)"
+              @click.native="restart(mr.number)"></RedoButton>
+            <DeployButton :disabled="mr.buildStats !== 'Ready'"
+              :setting="setting"></DeployButton>
             <ReleaseButton></ReleaseButton>
           </td>
         </tr>
@@ -47,6 +49,11 @@
     sockets: {
       mrs (list) {
         this.list = list
+      },
+      'mr.buildStats' ([number, stats]) {
+        const mr = this.list.find(t => t.number === number)
+        mr.buildStats = stats
+        this.$forceUpdate()
       }
     },
     created () {
@@ -61,6 +68,9 @@
       async loadSetting () {
         const resp = await this.$http.get('/setting')
         this.setting = resp.data
+      },
+      async restart (number) {
+        await this.$http.post('/build/restart', { number })
       }
     }
   }

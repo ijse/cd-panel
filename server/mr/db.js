@@ -1,4 +1,5 @@
 const db = require('../db').getInstance('mr')
+const Emitter = require('events')
 
 /*
 mr = {
@@ -12,21 +13,22 @@ const defaults = {
 
 db.defaults(defaults).write()
 
-module.exports = {
+class MR extends Emitter {
   updateStatus (number, stats) {
     db.get('list')
       .find({ number })
       .set('buildStats', stats)
       .write()
-  },
+    this.emit('mrStatus', [number, stats])
+  }
   find (crit) {
     return db.get('list')
       .find(crit)
       .value()
-  },
+  }
   get list () {
     return db.get('list').value()
-  },
+  }
   set list (list) {
     const curList = this.list
     const newList = list.map(item => {
@@ -39,3 +41,4 @@ module.exports = {
     db.set('list', newList).write()
   }
 }
+module.exports = new MR()
