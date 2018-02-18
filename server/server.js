@@ -36,4 +36,12 @@ require('./build').call(app, app)
 
 app.use(app.router.routes())
 
+// init db
+app.db = require('./db')
+
+// init socket.io
+const server = require('http').createServer(app.callback())
+app.io = require('socket.io')(server)
+app.server = server
+
 module.exports = app

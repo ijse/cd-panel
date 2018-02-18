@@ -5,6 +5,7 @@ const { join } = require('path')
 describe('Prepare for test', function () {
   it('should create test repo', () => {
     const dataDir = config.get('dataDir')
+    shell.exec(`mkdir -p ${dataDir}`)
     shell.cd(dataDir)
     shell.mkdir('repo')
     shell.cd('repo')
