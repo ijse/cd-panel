@@ -39,16 +39,17 @@ class Build {
     shelljs.mkdir('-p', this.workspace)
   }
 
-  exec (cmd, opts = {}) {
+  exec (cmd, opts = { async: true }) {
     if (this.worker) {
       this.kill()
     }
     return new Promise(resolve => {
       shelljs.cd(this.workspace)
-      this.worker = shelljs.exec(cmd, opts, resolve)
-      return this.worker
+      this.worker = shelljs.exec(cmd, opts, (code, stdout, stderr) => {
+        resolve([code, stdout, stderr])
+      })
     })
-    .then((code, stdout, stderr) => {
+    .then(([code, stdout, stderr]) => {
       this.worker = null
       if (code !== 0) throw new Error(stderr)
       return stdout

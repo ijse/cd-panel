@@ -35,11 +35,11 @@ const tick = async () => {
   setStatus('start', task)
   // run next task
   queue.current.promise = Build.runTask(task)
-    .then(() => {
+    .then(stdout => {
       queue.finish(task, true)
       setStatus('finish', task)
     })
-    .catch(() => {
+    .catch(stderr => {
       queue.finish(task, false)
       setStatus('fail', task)
     })
@@ -53,7 +53,6 @@ exports.createBuild = async number => {
   queue.append([number, ['build']])
   mr.updateStatus(number, 'Waiting')
   tick()
-  return pr
 }
 
 exports.makeRelease = async (number, target) => {

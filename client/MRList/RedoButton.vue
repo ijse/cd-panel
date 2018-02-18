@@ -14,8 +14,7 @@
     },
     computed: {
       isDisabled () {
-        return this.mr.buildStats !== 'error' &&
-          this.mr.buildStats !== 'halt'
+        return [ 'Error', 'Halt' ].includes(this.mr.buildStats)
       }
     },
     methods: {
