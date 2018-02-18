@@ -9,15 +9,18 @@
       </div>
       <router-view></router-view>
     </div>
+    <Footer></Footer>
   </section>
 </template>
 
 <script>
 import NavBar from './Nav'
+import Footer from './Footer'
 export default {
   name: 'App',
   components: {
-    NavBar
+    NavBar,
+    Footer
   },
   data () {
     return {
