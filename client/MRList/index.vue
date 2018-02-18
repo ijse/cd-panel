@@ -21,7 +21,7 @@
               @click.native="restart(mr.number)"></RedoButton>
             <DeployButton :disabled="mr.buildStats !== 'Ready'"
               :setting="setting"></DeployButton>
-            <ReleaseButton></ReleaseButton>
+            <ReleaseButton :disabled="mr.buildStats !== 'Ready'"></ReleaseButton>
           </td>
         </tr>
       </tbody>
