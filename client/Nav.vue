@@ -1,7 +1,7 @@
 <template>
   <div class="navbar is-fixed-top">
     <div class="navbar-brand">
-      <router-link to="/" class="navbar-item">
+      <router-link to="/" class="navbar-item" title="Dashboard">
         / CDPanel /
       </router-link>
       <div class="navbar-burger" :class="{ 'is-active': burgerOn }"
@@ -19,7 +19,9 @@
         <router-link to="/help" class="navbar-item"> Help </router-link>
       </div>
       <div class="navbar-end">
-        <div class="navbar-item has-dropdown" :class="{ 'is-active': themeOn }">
+        <div class="navbar-item has-dropdown"
+          :class="{ 'is-active': themeOn }"
+          @mouseleave="themeOn = false">
           <a class="navbar-link" @click.prevent="themeOn = !themeOn">Theme</a>
           <div class="navbar-dropdown is-right">
             <a class="navbar-item"

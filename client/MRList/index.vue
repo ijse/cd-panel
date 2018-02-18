@@ -11,8 +11,17 @@
       </thead>
       <tbody>
         <tr v-for="mr in list">
-          <td>#{{ mr.number }} {{ mr.title }}</td>
-          <td>{{ mr.user.login }}</td>
+          <td>
+            <a :href="mr.html_url" target="_blank">
+              #{{ mr.number }} {{ mr.title }}
+            </a>
+          </td>
+          <td>
+            <a :href="mr.user.html_url" target="_blank">
+              <img :src="mr.user.avatar_url" class="avatar" />
+              {{ mr.user.login }}
+            </a>
+          </td>
           <td>
             <BuildStats :stats="mr.buildStats"></BuildStats>
           </td>
@@ -75,3 +84,11 @@
     }
   }
 </script>
+<style scoped>
+  .avatar {
+    width: 1.5em;
+    height: 1.5em;
+    margin: 3px;
+    vertical-align: middle;
+  }
+</style>
