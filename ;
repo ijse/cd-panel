@@ -1,10 +1,5 @@
 <template>
-<<<<<<< HEAD
   <a class="button" :disabled="disabled">
-=======
-  <a class="button" @click="restart()"
-    :disabled="disabled">
->>>>>>> cd6e36b61ae6307fc03292c57c823a3989b09ce9
     <span class="icon is-small">
       <i class="fas fa-redo"></i>
     </span>
