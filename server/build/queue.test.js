@@ -13,27 +13,27 @@ describe('server/build/queue', function () {
 
   it('should save queue content right', () => {
     db.clear()
-    db.append('task1')
-    db.append('task2')
+    db.append([100, ['task1']])
+    db.append([100, ['task2']])
 
-    assert.equal(db.list[0], 'task1')
-    assert.equal(db.list[1], 'task2')
+    assert.equal(db.list[0][1][0], 'task1')
+    assert.equal(db.list[1][1][0], 'task2')
   })
 
   it('should start the first item', () => {
     db.clear()
-    db.append({ name: 'task1' })
-    db.append({ name: 'task2' })
+    db.append([100, ['task1']])
+    db.append([100, ['task2']])
 
     assert.equal(db.current, null)
 
     const task = db.startNext()
     assert.ok(db.current)
-    assert.equal(db.current.name, 'task1')
+    assert.equal(db.current[1][0], 'task1')
 
     // check queue list
     assert.equal(db.list.length, 2)
-    assert.equal(db.list[0].name, 'task1')
+    assert.equal(db.list[0][1][0], 'task1')
   })
 
   it('should remove the first item when finish', () => {
@@ -42,7 +42,16 @@ describe('server/build/queue', function () {
 
     // check queue list
     assert.equal(db.list.length, 1)
-    assert.equal(db.list[0].name, 'task2')
+    assert.equal(db.list[0][1][0], 'task2')
+  })
+
+  it('should not append duplicate tasks', () => {
+    db.clear()
+    const task = [ 100, [ 'download' ] ]
+    db.append(task)
+    assert.equal(db.list.length, 1)
+    db.append(task)
+    assert.equal(db.list.length, 1)
   })
 
   after(() => {
