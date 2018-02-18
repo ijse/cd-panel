@@ -18,6 +18,16 @@
         <router-link to="/setting" class="navbar-item"> Setting </router-link>
         <router-link to="/help" class="navbar-item"> Help </router-link>
       </div>
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown" :class="{ 'is-active': themeOn }">
+          <a class="navbar-link" @click.prevent="themeOn = !themeOn">Theme</a>
+          <div class="navbar-dropdown is-right">
+            <a class="navbar-item"
+              @click.prevent="switchTheme(theme)"
+              v-for="theme in themeList">{{ theme.name }}</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -26,7 +36,49 @@
   export default {
     name: 'NavBar',
     data: () => ({
-      burgerOn: false
-    })
+      themeOn: false,
+      burgerOn: false,
+      themes: [
+        'Default',
+        'Cerulean',
+        'Cosmo',
+        'Cyborg',
+        'Darkly',
+        'Flatly',
+        'Journal',
+        'Litera',
+        'Lumen',
+        'Materia',
+        'Minty',
+        'Nuclear',
+        'Pulse',
+        'Slate',
+        'Simplex',
+        'Solar',
+        'Superhero',
+        'Spacelab'
+      ]
+    }),
+    created () {
+      const themeName = localStorage.getItem('theme') || 'Default'
+      const theme = this.themeList.find(t => t.name === themeName)
+      this.switchTheme(theme || themeList[0])
+    },
+    computed: {
+      themeList () {
+        return this.themes.map(name => ({
+          name,
+          style: `https://jenil.github.io/bulmaswatch/${name.toLowerCase()}/bulmaswatch.min.css`
+        }))
+      }
+    },
+    methods: {
+      switchTheme (theme) {
+        const link = document.querySelector('link[theme]')
+        link.setAttribute('href', theme.style)
+        this.themeOn = false
+        localStorage.setItem('theme', theme.name)
+      }
+    }
   }
 </script>

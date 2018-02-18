@@ -1,5 +1,5 @@
 <template>
-  <section class="app">
+  <section class="app" v-cloak>
     <NavBar></NavBar>
     <div class="container">
       <div class="level">
