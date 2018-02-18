@@ -13,12 +13,21 @@ const app = new Koa()
 app.config = config
 app.router = new Router()
 
+// init db
+app.db = require('./db')
+
+// init socket.io
+const server = require('http').createServer(app.callback())
+app.io = require('socket.io')(server)
+app.server = server
+
+// middlewares
 app.use(morgan('dev'))
 app.use(static('./dist'))
 
 app.use(bodyParser())
 
-// fallback
+// fallback requests to index.html
 app.router.get('/*', async (ctx, next) => {
   if (ctx.accepts('html', 'json') !== 'json') {
     ctx.response.type = 'html'
@@ -35,13 +44,5 @@ require('./mr').call(app, app)
 require('./build').call(app, app)
 
 app.use(app.router.routes())
-
-// init db
-app.db = require('./db')
-
-// init socket.io
-const server = require('http').createServer(app.callback())
-app.io = require('socket.io')(server)
-app.server = server
 
 module.exports = app

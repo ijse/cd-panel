@@ -44,6 +44,11 @@
       list: [],
       setting: {}
     }),
+    sockets: {
+      mrs (list) {
+        this.list = list
+      }
+    },
     created () {
       this.loadList()
       this.loadSetting()
