@@ -13,8 +13,13 @@
         <tr v-for="mr in list">
           <td>
             <a :href="mr.html_url" target="_blank">
-              #{{ mr.number }} {{ mr.title }}
+              <strong>#{{ mr.number }}</strong> {{ mr.title }}
             </a>
+            <div class="tags is-inline-block">
+              <span class="tag is-rounded"
+                :style="{ 'border-color': '#' + label.color }"
+                v-for="label in mr.labels"> {{ label.name }} </span>
+            </div>
           </td>
           <td>
             <a :href="mr.user.html_url" target="_blank">
@@ -90,5 +95,15 @@
     height: 1.5em;
     margin: 3px;
     vertical-align: middle;
+  }
+  th:nth-child(2) {
+    min-width: 140px;
+  }
+  th:nth-child(4) {
+    min-width: 250px;
+  }
+  td .tags .tag {
+    border: 1px solid;
+    box-shadow: 0 0 1px currentColor;
   }
 </style>
