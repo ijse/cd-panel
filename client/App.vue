@@ -29,4 +29,20 @@ export default {
   }
 }
 </script>
+<style>
+  html, body {
+    height: 100%;
+  }
+  body {
+    padding-top: 52px;
+  }
+  .app {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .app>.container {
+    flex: 1;
+  }
+</style>
 
