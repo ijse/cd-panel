@@ -44,5 +44,8 @@ export default {
   .app>.container {
     flex: 1;
   }
+  [v-cloak] {
+    display: none;
+  }
 </style>
 

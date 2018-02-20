@@ -80,7 +80,15 @@
         link.setAttribute('href', theme.style)
         this.themeOn = false
         localStorage.setItem('theme', theme.name)
+        link.onload = () => {
+          document.body.style.visibility = 'visible'
+        }
       }
     }
   }
 </script>
+<style>
+  body {
+    visibility: hidden;
+  }
+</style>
