@@ -1,6 +1,7 @@
 const queue = require('./queue')
 const Build = require('./Build')
 const mr = require('app/server/mr/db')
+const statsDB = require('app/server/stats/db')
 
 const setStatus = (type, [number, [ step ]]) => {
   const map = {
@@ -24,7 +25,9 @@ const setStatus = (type, [number, [ step ]]) => {
   return mr.updateStatus(number, stats)
 }
 
-const tick = async () => {
+const tick = () => {
+  statsDB.update('queue size', queue.list.length)
+
   // task is running
   if (queue.current) return
 

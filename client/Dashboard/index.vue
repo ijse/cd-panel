@@ -2,13 +2,14 @@
   <div class="dashboard">
     <nav class="level">
       <div class="level-item has-text-centered"
-        v-for="stats in statsList">
+        v-for="(value, name) in statsList">
         <div>
-          <p class="heading">{{ stats.name }}</p>
-          <p class="title">{{ stats.value }}</p>
+          <p class="heading">{{ name }}</p>
+          <p class="title">{{ value }}</p>
         </div>
       </div>
     </nav>
+    <hr />
   </div>
 </template>
 <script>
@@ -21,11 +22,24 @@
     },
     data: () => ({
       statsList: {
-        prCount: { name: 'Pull Requests', value: 23 },
-        visitCount: { name: 'Visit Count', value: 21 },
-        deployCount: { name: 'Deploy Times', value: 23 },
-        QueueSize: { name: 'Tasks in Queue', value: 23 }
+        prCount: 0,
+        visitCount: 0,
+        deployCount: 0,
+        queueSize: 0
       }
-    })
+    }),
+    sockets: {
+      'stats-refresh' (data) {
+        this.statsList = data || {}
+      }
+    },
+    created () {
+      this.load()
+    },
+    methods: {
+      load () {
+        this.$socket.emit('load-stats')
+      }
+    }
   }
 </script>
