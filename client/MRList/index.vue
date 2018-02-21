@@ -4,7 +4,7 @@
       <thead>
         <tr>
           <th>Title</th>
-          <th>Author</th>
+          <th>Developer</th>
           <th>Stats</th>
           <th>Action</th>
         </tr>
@@ -31,11 +31,11 @@
             <BuildStats :stats="mr.buildStats"></BuildStats>
           </td>
           <td>
-            <RedoButton :disabled="!['Error', 'Halt'].includes(mr.buildStats)"
-              @click.native="restart(mr.number)"></RedoButton>
-            <DeployButton :disabled="mr.buildStats !== 'Ready'"
+            <RedoButton :disabled="!canRestart(mr)"
+              @click.native="restart(mr)"></RedoButton>
+            <DeployButton :disabled="!canDeploy(mr)"
               :setting="setting"></DeployButton>
-            <ReleaseButton :disabled="mr.buildStats !== 'Ready'"></ReleaseButton>
+            <ReleaseButton :disabled="!canDeploy(mr)"></ReleaseButton>
           </td>
         </tr>
       </tbody>
@@ -70,11 +70,19 @@
         this.$forceUpdate()
       }
     },
+    computed: {
+    },
     created () {
       this.loadList()
       this.loadSetting()
     },
     methods: {
+      canRestart (mr) {
+        return ['Error', 'Halt'].includes(mr.buildStats)
+      },
+      canDeploy (mr) {
+        return mr.buildStats === 'Ready'
+      },
       async loadList () {
         const resp = await this.$http.get('/mr')
         this.list = resp.data
@@ -83,8 +91,9 @@
         const resp = await this.$http.get('/setting')
         this.setting = resp.data
       },
-      async restart (number) {
-        await this.$http.post('/build/restart', { number })
+      async restart (mr) {
+        if (!this.canRestart(mr)) return
+        await this.$http.post('/build/restart', { number: mr.number })
       }
     }
   }
