@@ -16,7 +16,6 @@ class StatsDB extends Base {
 
   increase (name) {
     const value = +this.db.get(name).value() || 0
-    console.log('!!!', value)
     return this.update(name, value + 1)
   }
 

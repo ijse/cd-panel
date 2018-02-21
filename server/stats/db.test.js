@@ -21,4 +21,9 @@ describe('server/stats/db', function () {
     assert.equal(db.get('queue size'), 1)
     assert.equal(Object.keys(db.getAll()).length, 1)
   })
+
+  it('should increase stats by 1', () => {
+    db.increase('visits')
+    assert.equal(db.get('visits'), 1)
+  })
 })
