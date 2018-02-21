@@ -26,4 +26,9 @@ describe('server/stats/db', function () {
     db.increase('visits')
     assert.equal(db.get('visits'), 1)
   })
+
+  it('should decrease stats by 1', () => {
+    db.decrease('visits')
+    assert.equal(db.get('visits'), 0)
+  })
 })
