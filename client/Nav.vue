@@ -76,19 +76,31 @@
     },
     methods: {
       switchTheme (theme) {
-        const link = document.querySelector('link[theme]')
-        link.setAttribute('href', theme.style)
-        this.themeOn = false
+        document.body.style.opacity = 0
+        document.body.style.visibility = 'hidden'
+
         localStorage.setItem('theme', theme.name)
-        link.onload = () => {
-          document.body.style.visibility = 'visible'
+        this.themeOn = false
+
+        const head = document.querySelector('head')
+        const oldLink = document.querySelector('link[theme]')
+        const newLink = document.createElement('link')
+        newLink.setAttribute('rel', 'stylesheet')
+        newLink.setAttribute('type', 'text/css')
+        newLink.setAttribute('href', theme.style)
+        newLink.setAttribute('theme', true)
+        newLink.onload = () => {
+        document.body.style.visibility = 'visible'
+          document.body.style.opacity = 1
         }
+        head.replaceChild(newLink, oldLink)
       }
     }
   }
 </script>
 <style>
   body {
-    visibility: hidden;
+    opacity: 0;
+    transition: opacity .5s;
   }
 </style>

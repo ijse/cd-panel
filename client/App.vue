@@ -40,6 +40,7 @@ export default {
   }
   .app>.container {
     flex: 1;
+    padding: 10px;
   }
   [v-cloak] {
     display: none;
