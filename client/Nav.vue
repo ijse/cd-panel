@@ -22,11 +22,18 @@
         <div class="navbar-item has-dropdown"
           :class="{ 'is-active': themeOn }"
           @mouseleave="themeOn = false">
-          <a class="navbar-link" @click.prevent="themeOn = !themeOn">Theme</a>
+          <a class="navbar-link" @click.prevent="themeOn = !themeOn">
+            <span class="icon">
+              <i class="fas fa-paint-brush"></i>
+            </span>
+            Theme
+          </a>
           <div class="navbar-dropdown is-right">
             <a class="navbar-item"
               @click.prevent="switchTheme(theme)"
-              v-for="theme in themeList">{{ theme.name }}</a>
+              v-for="theme in themeList">
+              {{ theme.name }}
+            </a>
           </div>
         </div>
       </div>
@@ -102,5 +109,9 @@
   body {
     opacity: 0;
     transition: opacity .5s;
+  }
+  .navbar .navbar-dropdown {
+    max-height: 500px;
+    overflow: auto;
   }
 </style>
