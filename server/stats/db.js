@@ -8,8 +8,8 @@ class StatsDB extends Base {
   update (name, value) {
     const oldValue = this.db.get(name).value()
     if (oldValue !== value) {
-      this.emit('update', [name, value])
       this.db.set(name, value).write()
+      this.emit('update', [name, value])
     }
     return this.db.getState()
   }
@@ -17,6 +17,11 @@ class StatsDB extends Base {
   increase (name) {
     const value = +this.db.get(name).value() || 0
     return this.update(name, value + 1)
+  }
+
+  decrease (name) {
+    const value = +this.db.get(name).value() || 0
+    return this.update(name, value - 1)
   }
 
   getAll () {

@@ -2,7 +2,7 @@
   <div class="navbar">
     <div class="navbar-brand">
       <router-link to="/" class="navbar-item" title="Dashboard">
-        / CDPanel /
+        <span class="icon"><i class="fas fa-home"></i></span>/ CDPanel /
       </router-link>
       <div class="navbar-burger" :class="{ 'is-active': burgerOn }"
         @click="burgerOn = !burgerOn">
