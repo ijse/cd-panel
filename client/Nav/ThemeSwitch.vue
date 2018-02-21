@@ -1,52 +1,27 @@
 <template>
-  <div class="navbar">
-    <div class="navbar-brand">
-      <router-link to="/" class="navbar-item" title="Dashboard">
-        <span class="icon"><i class="fas fa-home"></i></span>/ CDPanel /
-      </router-link>
-      <div class="navbar-burger" :class="{ 'is-active': burgerOn }"
-        @click="burgerOn = !burgerOn">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-    <div class="navbar-menu" :class="{ 'is-active': burgerOn }">
-      <div class="navbar-start">
-        <router-link to="/mr" class="navbar-item"> MR </router-link>
-        <router-link to="/backlog" class="navbar-item"> Backlog </router-link>
-        <router-link to="/setting" class="navbar-item"> Setting </router-link>
-        <router-link to="/help" class="navbar-item"> Help </router-link>
-      </div>
-      <div class="navbar-end">
-        <div class="navbar-item has-dropdown"
-          :class="{ 'is-active': themeOn }"
-          @mouseleave="themeOn = false">
-          <a class="navbar-link" @click.prevent="themeOn = !themeOn">
-            <span class="icon">
-              <i class="fas fa-paint-brush"></i>
-            </span>
-            Theme
-          </a>
-          <div class="navbar-dropdown is-right">
-            <a class="navbar-item"
-              @click.prevent="switchTheme(theme)"
-              v-for="theme in themeList">
-              {{ theme.name }}
-            </a>
-          </div>
-        </div>
-      </div>
+  <div class="navbar-item has-dropdown"
+    :class="{ 'is-active': themeOn }"
+    @mouseleave="themeOn = false">
+    <a class="navbar-link" @click.prevent="themeOn = !themeOn">
+      <span class="icon">
+        <i class="fas fa-paint-brush"></i>
+      </span>
+      Theme
+    </a>
+    <div class="navbar-dropdown is-right">
+      <a class="navbar-item"
+        @click.prevent="switchTheme(theme)"
+        v-for="theme in themeList">
+        {{ theme.name }}
+      </a>
     </div>
   </div>
 </template>
-
 <script>
   export default {
-    name: 'NavBar',
+    name: 'ThemeSwitch',
     data: () => ({
       themeOn: false,
-      burgerOn: false,
       themes: [
         'Default',
         'Cerulean',
