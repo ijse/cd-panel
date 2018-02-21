@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar is-fixed-top">
+  <div class="navbar">
     <div class="navbar-brand">
       <router-link to="/" class="navbar-item" title="Dashboard">
         / CDPanel /

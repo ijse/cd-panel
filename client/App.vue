@@ -33,9 +33,6 @@ export default {
   html, body {
     height: 100%;
   }
-  body {
-    padding-top: 52px;
-  }
   .app {
     height: 100%;
     display: flex;
