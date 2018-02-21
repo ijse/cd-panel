@@ -19,6 +19,10 @@
         <router-link to="/help" class="navbar-item"> Help </router-link>
       </div>
       <div class="navbar-end">
+        <a class="navbar-item">
+          <span class="icon"><i class="fab fa-github"></i></span>
+          tigerbrokers/gem
+        </a>
         <ThemeSwitch></ThemeSwitch>
       </div>
     </div>
