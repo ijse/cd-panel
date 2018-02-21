@@ -10,6 +10,11 @@
         </tr>
       </thead>
       <tbody>
+        <tr v-if="!list.length">
+          <td colspan="4">
+            <p class="has-text-centered">Empty for now.</p>
+          </td>
+        </tr>
         <tr v-for="mr in list">
           <td>
             <a :href="mr.html_url" target="_blank">
