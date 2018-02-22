@@ -37,17 +37,22 @@ const tick = () => {
 
   setStatus('start', task)
   // run next task
-  queue.current.promise = Build.runTask(task)
+  return queue.current.promise = Build.runTask(task)
     .then(stdout => {
       queue.finish(task, true)
       setStatus('finish', task)
+      return stdout
     })
     .catch(stderr => {
       queue.finish(task, false)
       setStatus('fail', task)
+      return stderr
     })
     // always call next tick()
-    .then(tick)
+    .then((output) => {
+      tick()
+      return output
+    })
 }
 
 exports.createBuild = async number => {
