@@ -46,6 +46,7 @@ class Build {
     }
     return new Promise(resolve => {
       shelljs.cd(this.workspace)
+      console.log(`>>>> Run task for #${this.number}:`, cmd)
       this.worker = shelljs.exec(cmd, opts, (code, stdout, stderr) => {
         resolve([code, stdout, stderr])
       })

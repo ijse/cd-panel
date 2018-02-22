@@ -17,7 +17,6 @@
     name: 'Dashboard',
     sockets: {
       'stats-refresh' (data) {
-        console.log('data:', data)
         this.statsList = data || {}
       }
     },
@@ -34,7 +33,6 @@
     },
     methods: {
       load () {
-        console.log('send load stats')
         this.$socket.emit('load-stats')
       }
     }
