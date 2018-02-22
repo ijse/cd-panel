@@ -32,6 +32,7 @@ class Build {
   constructor (pr) {
     this.pr = pr
     this.repoUrl = pr.head.repo.clone_url
+      .replace(/\/\//, `//${config.ghToken}@`)
     this.branch = pr.head.ref
     this.number = pr.number
     this.workspace = join(workDir, '' + this.number)
