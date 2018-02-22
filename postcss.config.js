@@ -1,5 +1,7 @@
 module.exports = {
   plugins: [
+    require('postcss-import'),
+    require('postcss-nesting'),
     require('autoprefixer')({
       browsers: [
         "> 1%",

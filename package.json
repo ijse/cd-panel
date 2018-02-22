@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@octokit/rest": "^14.0.9",
+    "ansi-to-html": "^0.6.4",
     "axios": "^0.17.1",
     "config": "^1.29.4",
     "koa": "^2.4.1",
@@ -51,7 +52,10 @@
     "koa-static": "^4.0.2",
     "lodash-id": "^0.14.0",
     "lowdb": "^1.0.0",
+    "moment": "^2.20.1",
     "nodemon": "^1.14.12",
+    "postcss-import": "^11.1.0",
+    "postcss-nesting": "^4.2.1",
     "promise.prototype.finally": "^3.1.0",
     "shelljs": "^0.8.1",
     "socket.io": "^2.0.4",

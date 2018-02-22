@@ -43,6 +43,7 @@ require('./setting').call(app, app)
 require('./mr').call(app, app)
 require('./build').call(app, app)
 require('./stats').call(app, app)
+require('./monitor').call(app, app)
 
 app.use(app.router.routes())
 
