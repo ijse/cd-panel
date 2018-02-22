@@ -16,8 +16,9 @@
   export default {
     name: 'Dashboard',
     sockets: {
-      mrs (list) {
-        this.statsList.prCount.value = list.length
+      'stats-refresh' (data) {
+        console.log('data:', data)
+        this.statsList = data || {}
       }
     },
     data: () => ({
@@ -28,16 +29,12 @@
         queueSize: 0
       }
     }),
-    sockets: {
-      'stats-refresh' (data) {
-        this.statsList = data || {}
-      }
-    },
     created () {
       this.load()
     },
     methods: {
       load () {
+        console.log('send load stats')
         this.$socket.emit('load-stats')
       }
     }

@@ -37,5 +37,7 @@ class StatsDB extends Base {
   }
 }
 
-module.exports = new StatsDB('stats')
+const rt = new StatsDB('stats')
+// rt.setMaxListeners(0)
+module.exports = rt
 

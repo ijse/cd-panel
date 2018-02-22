@@ -14,6 +14,9 @@
       stdout (str) {
         this.screen += str
       }
+    },
+    created () {
+      this.$socket.emit('open-monitor')
     }
   }
 </script>
