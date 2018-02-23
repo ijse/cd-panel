@@ -1,5 +1,5 @@
 <template>
-  <div class="mrlist">
+  <div class="board">
     <table class="table is-fullwidth is-hoverable">
       <thead>
         <tr>
@@ -54,7 +54,7 @@
   import RedoButton from './RedoButton'
 
   export default {
-    name: 'MRList',
+    name: 'Board',
     components: {
       DeployButton,
       ReleaseButton,

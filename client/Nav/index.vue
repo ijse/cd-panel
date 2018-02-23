@@ -13,7 +13,7 @@
     </div>
     <div class="navbar-menu" :class="{ 'is-active': burgerOn }">
       <div class="navbar-start">
-        <router-link to="/mr" class="navbar-item"> MR </router-link>
+        <router-link to="/board" class="navbar-item"> Board </router-link>
         <router-link to="/backlog" class="navbar-item"> Backlog </router-link>
         <router-link to="/monitor" class="navbar-item"> Monitor </router-link>
         <router-link to="/setting" class="navbar-item"> Setting </router-link>
