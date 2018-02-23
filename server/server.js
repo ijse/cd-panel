@@ -22,7 +22,7 @@ app.io = require('socket.io')(server)
 app.server = server
 
 // middlewares
-// app.use(morgan('dev'))
+app.use(morgan('dev'))
 app.use(static('./dist'))
 
 app.use(bodyParser())

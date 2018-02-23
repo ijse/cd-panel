@@ -39,7 +39,7 @@
             <RedoButton :disabled="!canRestart(mr)"
               @click.native="restart(mr)"></RedoButton>
             <DeployButton :disabled="!canDeploy(mr)"
-              :setting="setting"></DeployButton>
+              @deploy="deployTo(mr, arguments[0])" :setting="setting"></DeployButton>
             <ReleaseButton :disabled="!canDeploy(mr)"></ReleaseButton>
           </td>
         </tr>
@@ -99,7 +99,13 @@
       },
       async restart (mr) {
         if (!this.canRestart(mr)) return
-        await this.$http.post('/build/restart', { number: mr.number })
+        await this.$http.post('/restart', { number: mr.number })
+      },
+      async deployTo (mr, target) {
+        await this.$http.post('/deploy', {
+          number: mr.number,
+          target
+        })
       }
     }
   }

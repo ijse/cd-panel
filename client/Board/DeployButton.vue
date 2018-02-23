@@ -44,7 +44,8 @@
     },
     methods: {
       doDeploy (target) {
-        // todo: trigger deploy action
+        this.$emit('deploy', target)
+        this.isActive = false
       }
     }
   }

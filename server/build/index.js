@@ -13,11 +13,23 @@ module.exports = function () {
     ctx.body = 'ok'
   })
 
-  this.router.post('/build/restart', async ctx => {
+  this.router.post('/restart', async ctx => {
     const { number } = ctx.request.body
     const pr = mr.find({ number })
 
     ctx.status = 200
     ctx.body = service.createBuild(pr.number)
+  })
+
+  this.router.post('/deploy', async ctx => {
+    const { number, target } = ctx.request.body
+    const pr = mr.find({ number })
+
+    if (pr.buildStats !== 'Ready') {
+      return await ctx.throw(500)
+    }
+
+    service.makeRelease(number, target)
+    ctx.status = 200
   })
 }
