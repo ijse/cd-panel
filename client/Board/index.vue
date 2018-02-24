@@ -31,8 +31,8 @@
                   {{ mr.user.login }}
                 </a>
                 update
-                <date :value="mr.updated_at" :title="mr.updated_at | format">
-                  {{ mr.updated_at | timeToNow }}</date>
+                <time :datetime="mr.updated_at" :title="mr.updated_at | format">
+                  {{ mr.updated_at | timeToNow }}</time>
               </small>
             </footer>
           </td>
