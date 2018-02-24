@@ -23,7 +23,7 @@ app.server = server
 
 // middlewares
 app.use(morgan('dev'))
-app.use(static('./dist'))
+app.use(static(join(__dirname, '../dist')))
 
 app.use(bodyParser())
 
