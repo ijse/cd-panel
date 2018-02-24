@@ -4,7 +4,6 @@
   "version": "0.0.1",
   "author": "Li Yi <i@ijser.cn>",
   "license": "MIT",
-  "private": true,
   "scripts": {
     "start": "npm run dev",
     "postinstall": "ln -sf ../ node_modules/app || true",
