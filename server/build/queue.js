@@ -63,6 +63,17 @@ class Queue extends Emitter {
       .write()
   }
 
+  removeTask (number, name) {
+    db.get('queue')
+      .remove(t => {
+        if (!name) {
+          return t[0] === number
+        }
+        return t[0] === number && t[1][0] === name
+      })
+      .write()
+  }
+
   clear () {
     db.set('queue', []).write()
   }

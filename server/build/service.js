@@ -64,7 +64,7 @@ exports.createBuild = async number => {
     queue.current.build.kill()
   }
   // clear all this number task
-  queue.removeByNumber(number)
+  queue.removeTask(number)
 
   queue.append([number, ['download']])
   queue.append([number, ['prepare']])
@@ -74,6 +74,7 @@ exports.createBuild = async number => {
 }
 
 exports.makeRelease = async (number, target) => {
+  queue.removeTask(number, 'deploy')
   queue.prepend([number, ['deploy', target]])
   tick()
 }

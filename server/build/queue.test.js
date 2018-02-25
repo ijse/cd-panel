@@ -75,8 +75,20 @@ describe('server/build/queue', function () {
     db.append([ 100, ['deploy'] ])
 
     assert.equal(db.list.length, 5)
-    db.removeByNumber(100)
+    db.removeTask(100)
     assert.equal(db.list.length, 2)
+  })
+
+  it('should remove items by number and name', () => {
+    db.clear()
+    db.append([ 100, ['download'] ])
+    db.append([ 100, ['prepare'] ])
+    db.append([ 101, ['prepare'] ])
+    db.append([ 101, ['deploy'] ])
+    db.append([ 100, ['deploy'] ])
+
+    db.removeTask(101, 'deploy')
+    assert.equal(db.list.length, 4)
   })
 
   after(() => {
