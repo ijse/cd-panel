@@ -2,7 +2,6 @@ const { join } = require('path')
 const fs = require('fs')
 const config = require('config')
 const shelljs = require('shelljs')
-const github = require('../github')
 
 const mr = require('app/server/mr/db')
 const workDir = config.get('workDir')
