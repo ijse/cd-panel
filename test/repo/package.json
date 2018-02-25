@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "mkdir dist",
-    "release": "echo $TARGET > dist/release"
+    "deploy": "echo $TARGET > dist/release"
   },
   "license": "MIT",
   "dependencies": {

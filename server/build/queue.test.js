@@ -54,6 +54,19 @@ describe('server/build/queue', function () {
     assert.equal(db.list.length, 1)
   })
 
+  it('should remove all items which number is this', () => {
+    db.clear()
+    db.append([ 100, ['download'] ])
+    db.append([ 100, ['prepare'] ])
+    db.append([ 101, ['prepare'] ])
+    db.append([ 101, ['deploy'] ])
+    db.append([ 100, ['deploy'] ])
+
+    assert.equal(db.list.length, 5)
+    db.removeByNumber(100)
+    assert.equal(db.list.length, 2)
+  })
+
   after(() => {
     db.clear()
   })

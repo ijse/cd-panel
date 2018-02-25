@@ -26,7 +26,8 @@ class Build {
   static runTask ([number, [step, ...args]]) {
     const pr = mr.find({ number })
     const build = new Build(pr)
-    return build[step](...args)
+    build.promise = build[step](...args)
+    return build
   }
 
   constructor (pr) {

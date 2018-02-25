@@ -25,7 +25,7 @@ class Queue extends Emitter {
     const [ number, [step] ] = task
     // check duplicate
     const exist = db.get('queue').find(([_number, [_step]]) => {
-      return number === number && step === _step
+      return number === _number && step === _step
     }).value()
     if (exist) return
     db.get('queue').insert(task).write()
@@ -49,6 +49,12 @@ class Queue extends Emitter {
       this.emit('empty')
     }
     this.current = null
+  }
+
+  removeByNumber (number) {
+    db.get('queue')
+      .remove(t => t[0] === number)
+      .write()
   }
 
   clear () {
