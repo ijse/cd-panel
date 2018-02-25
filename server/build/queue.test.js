@@ -20,6 +20,18 @@ describe('server/build/queue', function () {
     assert.equal(db.list[1][1][0], 'task2')
   })
 
+  it('should insert task at index 1', () => {
+    db.clear()
+    db.append([100, ['task1']])
+    db.append([100, ['task2']])
+    db.append([100, ['task3']])
+
+    db.prepend([101, ['task0']])
+
+    assert.equal(db.list.length, 4)
+    assert.equal(db.list[1][0], 101)
+  })
+
   it('should start the first item', () => {
     db.clear()
     db.append([100, ['task1']])

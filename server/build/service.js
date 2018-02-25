@@ -74,7 +74,7 @@ exports.createBuild = async number => {
 }
 
 exports.makeRelease = async (number, target) => {
-  queue.append([number, ['deploy', target]])
+  queue.prepend([number, ['deploy', target]])
   tick()
 }
 

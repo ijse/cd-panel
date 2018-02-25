@@ -32,6 +32,12 @@ class Queue extends Emitter {
     this.emit('append', task)
   }
 
+  prepend (task) {
+    Object.assign(task, { id: db._.createId() })
+    db.get('queue').splice(1, 0, task).write()
+    this.emit('prepend', task)
+  }
+
   startNext () {
     this.current = this.list[0]
     this.emit('start', this.current)
