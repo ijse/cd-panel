@@ -90,8 +90,8 @@ class Build {
     return this.exec('npm run build')
   }
 
-  release (target) {
-    return this.exec(`TARGET=${target} npm run release`)
+  deploy (target) {
+    return this.exec(`TARGET=${target} npm run deploy`)
   }
 }
 

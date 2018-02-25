@@ -9,13 +9,13 @@ const setStatus = (type, [number, [ step ]]) => {
       download: 'Downloading',
       prepare: 'Processing',
       build: 'Building',
-      release: 'Releasing'
+      deploy: 'Deploying'
     },
     finish: {
       download: 'Downloaded',
       prepare: 'Prepared',
       build: 'Ready',
-      release: 'Released'
+      deploy: 'Ready'
     }
   }
   if (type === 'fail') {
@@ -64,7 +64,7 @@ exports.createBuild = async number => {
 }
 
 exports.makeRelease = async (number, target) => {
-  queue.append([number, ['release', target]])
+  queue.append([number, ['deploy', target]])
   tick()
 }
 

@@ -1,24 +1,27 @@
 {
   "name": "cd-panel",
   "description": "a Continue Deploy panel",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "author": "Li Yi <i@ijser.cn>",
   "license": "MIT",
-  "private": true,
   "scripts": {
     "start": "npm run dev",
     "postinstall": "ln -sf ../ node_modules/app || true",
     "dev": "npm run dev:server 2>&1 & npm run dev:client",
     "dev:server": "nodemon -w ./server server/start.js",
     "dev:client": "parcel watch --public-url / client/index.html",
-    "build": "parcel build --public-url / client/index.html",
+    "build": "npm run clean && parcel build --public-url / client/index.html",
     "test": "npm run test:pre && npm run test:server",
     "test-only": "npm run test:pre && npm run mocha --",
     "mocha": "NODE_CONFIG_ENV=test mocha",
     "test:pre": "rimraf .test && npm run mocha -- test.js",
     "test:server": "npm run mocha -- server/**/*test.js",
     "clean": "rimraf .cache dist .test",
+    "prepublish": "npm run build",
     "release": "echo release to ${TARGET} ok"
+  },
+  "bin": {
+    "cd-panel": "./server/start.js"
   },
   "browserslist": [
     "> 1%",
