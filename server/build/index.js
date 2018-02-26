@@ -1,16 +1,16 @@
 const service = require('./service')
 const mr = require('app/server/mr/db')
+const webhook = require('./webhook')
 
 module.exports = function () {
   service.tick()
+
+  // bind webhook
+  this.router.post('/hook', webhook)
+
   // broadcast changes of mr status
   mr.on('mrStatus', ([number, stats]) => {
     this.io.emit('mr.buildStats', [number, stats])
-  })
-
-  this.router.post('/hook', async ctx => {
-    ctx.status = 200
-    ctx.body = 'ok'
   })
 
   this.router.post('/restart', async ctx => {

@@ -39,6 +39,7 @@ class MR extends Emitter {
       return item
     })
     db.set('list', newList).write()
+    this.emit('mrList', newList)
   }
 }
 module.exports = new MR()

@@ -1,13 +1,14 @@
-const db = require('./db')
+const mrdb = require('./db')
 const fetchList = require('./fetchList')
 
 module.exports = function () {
   fetchList()
-  this.router.get('/mr', async ctx => {
-    ctx.body = db.list
 
-    fetchList().then(result => {
-      this.io.emit('mrs', result.data)
-    })
+  mrdb.on('mrList', list => {
+    this.io.emit('mrs', list)
+  })
+
+  this.router.get('/mr', async ctx => {
+    ctx.body = mrdb.list
   })
 }
