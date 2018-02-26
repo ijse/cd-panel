@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "npm run dev",
+    "start:lt": "lt -h http://local.ijser.cn -p 3000 -s devcdpanel",
     "postinstall": "ln -sf ../ node_modules/app || true",
     "dev": "npm run dev:server 2>&1 & npm run dev:client",
     "dev:server": "nodemon -w ./server server/start.js",
@@ -53,6 +54,7 @@
     "koa-morgan": "^1.0.1",
     "koa-router": "^7.4.0",
     "koa-static": "^4.0.2",
+    "localtunnel": "^1.8.3",
     "lodash-id": "^0.14.0",
     "lowdb": "^1.0.0",
     "moment": "^2.20.1",
