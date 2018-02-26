@@ -13,8 +13,16 @@
         this.$router.replace('/')
       }, 2000)
     },
+    deactivated () {
+      this.cancel()
+    },
     beforeDestroy () {
-      window.clearTimeout(this.timer)
+      this.cancel()
+    },
+    methods: {
+      cancel () {
+        window.clearTimeout(this.timer)
+      }
     }
   }
 </script>

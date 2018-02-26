@@ -37,7 +37,9 @@ const tick = () => {
 
   setStatus('start', task)
   // run next task
-  return queue.current.promise = Build.runTask(task)
+  const build = Build.runTask(task)
+  queue.current.build = build
+  return build.promise
     .then(stdout => {
       queue.finish(task, true)
       setStatus('finish', task)
@@ -56,6 +58,14 @@ const tick = () => {
 }
 
 exports.createBuild = async number => {
+  // check if exist task for this number
+  if (queue.current && queue.current[0] === number) {
+    // stop current task
+    queue.current.build.kill()
+  }
+  // clear all this number task
+  queue.removeTask(number)
+
   queue.append([number, ['download']])
   queue.append([number, ['prepare']])
   queue.append([number, ['build']])
@@ -64,7 +74,8 @@ exports.createBuild = async number => {
 }
 
 exports.makeRelease = async (number, target) => {
-  queue.append([number, ['deploy', target]])
+  queue.removeTask(number, 'deploy')
+  queue.prepend([number, ['deploy', target]])
   tick()
 }
 

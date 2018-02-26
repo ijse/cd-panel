@@ -13,7 +13,7 @@
     computed: {
       cls () {
         const statsMap = {
-          'halt': 'is-white',
+          'Pending': 'is-white',
           'Waiting': 'is-warning',
           'Downloading': 'is-warning',
           'Building': 'is-warning',

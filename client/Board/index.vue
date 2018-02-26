@@ -94,7 +94,7 @@
     },
     methods: {
       canRestart (mr) {
-        // return ['Error', 'Halt'].includes(mr.buildStats)
+        // return ['Error', 'Pending'].includes(mr.buildStats)
         return true
       },
       canDeploy (mr) {

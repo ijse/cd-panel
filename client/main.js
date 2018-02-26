@@ -12,6 +12,11 @@ const router = new Router({
   routes
 })
 
+// set page title
+router.afterEach(to => {
+  document.title = to.name + ' | cd-panel'
+})
+
 Vue.use({
   install (Vue) {
     Vue.prototype.$http = axios

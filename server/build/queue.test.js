@@ -20,6 +20,18 @@ describe('server/build/queue', function () {
     assert.equal(db.list[1][1][0], 'task2')
   })
 
+  it('should insert task at index 1', () => {
+    db.clear()
+    db.append([100, ['task1']])
+    db.append([100, ['task2']])
+    db.append([100, ['task3']])
+
+    db.prepend([101, ['task0']])
+
+    assert.equal(db.list.length, 4)
+    assert.equal(db.list[1][0], 101)
+  })
+
   it('should start the first item', () => {
     db.clear()
     db.append([100, ['task1']])
@@ -52,6 +64,31 @@ describe('server/build/queue', function () {
     assert.equal(db.list.length, 1)
     db.append(task)
     assert.equal(db.list.length, 1)
+  })
+
+  it('should remove all items which number is this', () => {
+    db.clear()
+    db.append([ 100, ['download'] ])
+    db.append([ 100, ['prepare'] ])
+    db.append([ 101, ['prepare'] ])
+    db.append([ 101, ['deploy'] ])
+    db.append([ 100, ['deploy'] ])
+
+    assert.equal(db.list.length, 5)
+    db.removeTask(100)
+    assert.equal(db.list.length, 2)
+  })
+
+  it('should remove items by number and name', () => {
+    db.clear()
+    db.append([ 100, ['download'] ])
+    db.append([ 100, ['prepare'] ])
+    db.append([ 101, ['prepare'] ])
+    db.append([ 101, ['deploy'] ])
+    db.append([ 100, ['deploy'] ])
+
+    db.removeTask(101, 'deploy')
+    assert.equal(db.list.length, 4)
   })
 
   after(() => {

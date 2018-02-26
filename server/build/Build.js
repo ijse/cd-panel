@@ -2,7 +2,6 @@ const { join } = require('path')
 const fs = require('fs')
 const config = require('config')
 const shelljs = require('shelljs')
-const github = require('../github')
 
 const mr = require('app/server/mr/db')
 const workDir = config.get('workDir')
@@ -26,7 +25,8 @@ class Build {
   static runTask ([number, [step, ...args]]) {
     const pr = mr.find({ number })
     const build = new Build(pr)
-    return build[step](...args)
+    build.promise = build[step](...args)
+    return build
   }
 
   constructor (pr) {
@@ -46,7 +46,7 @@ class Build {
     }
     return new Promise(resolve => {
       shelljs.cd(this.workspace)
-      console.log(`>>>> Run task for #${this.number}:`, cmd)
+      console.log(`>>>> Run task for #${this.number}@${this.branch}:`, cmd)
       this.worker = shelljs.exec(cmd, opts, (code, stdout, stderr) => {
         resolve([code, stdout, stderr])
       })

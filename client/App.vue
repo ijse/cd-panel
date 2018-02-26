@@ -7,7 +7,9 @@
           <h1 class="title"> {{ $route.name }} </h1>
         </div>
       </div>
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </div>
     <Footer></Footer>
   </section>
