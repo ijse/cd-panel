@@ -14,6 +14,7 @@
     <div class="navbar-menu" :class="{ 'is-active': burgerOn }">
       <div class="navbar-start">
         <router-link to="/board" class="navbar-item"> Board </router-link>
+        <router-link to="/queue" class="navbar-item"> Queue </router-link>
         <router-link to="/backlog" class="navbar-item"> Backlog </router-link>
         <router-link to="/monitor" class="navbar-item"> Monitor </router-link>
         <router-link to="/setting" class="navbar-item"> Setting </router-link>

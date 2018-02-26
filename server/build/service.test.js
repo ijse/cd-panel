@@ -2,7 +2,7 @@ const shelljs = require('shelljs')
 const config = require('config')
 const { join } = require('path')
 const assert = require('assert')
-const queue = require('./queue')
+const queue = require('app/server/queue/queue')
 
 describe('server/build/service', function () {
   const mr = require('app/server/mr/db')

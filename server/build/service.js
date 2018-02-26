@@ -1,4 +1,4 @@
-const queue = require('./queue')
+const queue = require('app/server/queue/queue')
 const Build = require('./Build')
 const mr = require('app/server/mr/db')
 const statsDB = require('app/server/stats/db')
