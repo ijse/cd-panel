@@ -68,8 +68,10 @@ class Build {
   download () {
     const repoExist = shelljs.test('-d', join(this.workspace, '.git'))
     const cmd = !repoExist ?
-      `git clone --depth=1 --single-branch -b ${this.branch} ${this.repoUrl} .`
-      : `git pull`
+      `git clone --depth=1 --no-single-branch -b ${this.branch} ${this.repoUrl} .`
+      : `git fetch && git pull`
+
+    cmd += ' && git merge origin/master --no-edit'
     return this.exec(cmd)
   }
 
