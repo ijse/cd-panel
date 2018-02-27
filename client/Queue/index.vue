@@ -25,7 +25,7 @@
         </tr>
       </tbody>
     </table>
-    <div class="has-text-centered">
+    <div class="has-text-centered" v-if="!list.length">
         Empty for now.
     </div>
   </div>
