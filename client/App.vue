@@ -12,6 +12,7 @@
       </keep-alive>
     </div>
     <Footer></Footer>
+    <div class="is-overlay lock-shade" v-show="!connected"></div>
   </section>
 </template>
 
@@ -24,8 +25,17 @@ export default {
     NavBar,
     Footer
   },
+  sockets: {
+    connect () {
+      this.connected = true
+    },
+    disconnect () {
+      this.connected = false
+    }
+  },
   data () {
     return {
+      connected: false,
       msg: 'hello world'
     }
   }
@@ -46,6 +56,10 @@ export default {
   }
   [v-cloak] {
     display: none;
+  }
+  .lock-shade {
+    background-color: currentColor;
+    opacity: .1;
   }
 </style>
 
