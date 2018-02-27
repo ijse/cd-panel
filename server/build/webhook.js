@@ -23,6 +23,7 @@ module.exports = async ctx => {
   if (ctx.get('X-GitHub-Event') === 'pull_request') {
     if (payload.action === 'synchronize') {
       handlePRUpdate()
+      ctx.body = 'update pr build'
     }
   }
 }
