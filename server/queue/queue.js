@@ -2,10 +2,12 @@ const db = require('../db').getInstance('queue')
 const Emitter = require('events')
 
 /**
- * task: [
- *    pr,
- *    [ step, args]
- * ]
+ * task: {
+ *  id,
+ *  number,
+ *  name,
+ *  ...
+ * }
  */
 db.defaults({
   queue: []
@@ -18,14 +20,13 @@ class Queue extends Emitter {
   }
 
   get list () {
-    return db.get('queue').value()
+    return db.get('queue').cloneDeep().value()
   }
 
   append (task) {
-    const [ number, [step] ] = task
     // check duplicate
-    const exist = db.get('queue').find(([_number, [_step]]) => {
-      return number === _number && step === _step
+    const exist = db.get('queue').find(({ number, name}) => {
+      return task.number === number && task.name === name
     }).value()
     if (exist) return
     db.get('queue').insert(task).write()
@@ -57,12 +58,6 @@ class Queue extends Emitter {
     this.current = null
   }
 
-  removeByNumber (number) {
-    db.get('queue')
-      .remove(t => t[0] === number)
-      .write()
-  }
-
   removeTask (number, name) {
     db.get('queue')
       .remove(t => {
@@ -72,6 +67,10 @@ class Queue extends Emitter {
         return t[0] === number && t[1][0] === name
       })
       .write()
+  }
+
+  removeTask (fn) {
+    db.get('queue').remove(fn).write()
   }
 
   clear () {

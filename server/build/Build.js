@@ -22,10 +22,10 @@ const workDir = config.get('workDir')
  *   - merge branch
  */
 class Build {
-  static runTask ([number, [step, ...args]]) {
-    const pr = mr.find({ number })
+  static runTask (task) {
+    const pr = mr.find({ number: task.number })
     const build = new Build(pr)
-    build.promise = build[step](...args)
+    build.promise = build[task.name](task)
     return build
   }
 
@@ -75,16 +75,16 @@ class Build {
     return this.exec(cmd)
   }
 
-  prepare (env = {}) {
+  prepare (params = {}) {
     const hasYarn = shelljs.which('yarn')
     const cmd = hasYarn ? 'yarn' : 'npm install'
 
-    this.setEnv(env)
+    this.setEnv(params)
     return this.exec(cmd)
   }
 
-  setEnv (value) {
-    Object.assign(shelljs.env, value)
+  setEnv ({ env = {} }) {
+    Object.assign(shelljs.env, env)
     return Promise.resolve()
   }
 
@@ -92,7 +92,7 @@ class Build {
     return this.exec('npm run build')
   }
 
-  deploy (target) {
+  deploy ({ target }) {
     return this.exec(`TARGET=${target} npm run deploy`)
   }
 

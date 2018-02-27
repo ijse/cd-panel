@@ -3,7 +3,7 @@ const Build = require('./Build')
 const mr = require('app/server/mr/db')
 const statsDB = require('app/server/stats/db')
 
-const setStatus = (type, [number, [ step ]]) => {
+const setStatus = (type, { number, name }) => {
   const map = {
     start: {
       download: 'Downloading',
@@ -21,7 +21,7 @@ const setStatus = (type, [number, [ step ]]) => {
   if (type === 'fail') {
     return mr.updateStatus(number, 'Error')
   }
-  const stats = map[type][step]
+  const stats = map[type][name]
   return mr.updateStatus(number, stats)
 }
 
@@ -59,35 +59,35 @@ const tick = () => {
 
 exports.createBuild = async number => {
   // check if exist task for this number
-  if (queue.current && queue.current[0] === number) {
+  if (queue.current && queue.current.number === number) {
     // stop current task
     queue.current.build.kill()
   }
   // clear all this number task
-  queue.removeTask(number)
+  queue.removeTask(t => t.number === number)
 
-  queue.append([number, ['download']])
-  queue.append([number, ['prepare']])
-  queue.append([number, ['build']])
+  queue.append({ number, name: 'download' })
+  queue.append({ number, name: 'prepare' })
+  queue.append({ number, name: 'build' })
   mr.updateStatus(number, 'Waiting')
   tick()
 }
 
 exports.makeRelease = async (number, target) => {
-  queue.removeTask(number, 'deploy')
-  queue.prepend([number, ['deploy', target]])
+  queue.removeTask(t => t.number === number && t.name === 'deploy')
+  queue.prepend({ number, name: 'deploy', target })
   mr.updateStatus(number, 'Waiting')
   tick()
 }
 
 exports.closePR = async number => {
   // check if exist task for this number
-  if (queue.current && queue.current[0] === number) {
+  if (queue.current && queue.current.number === number) {
     // stop current task
     queue.current.build.kill()
   }
   queue.removeTask(number)
-  queue.append([number, ['clean']])
+  queue.append({ number, name: 'clean' })
   mr.updateStatus(number, 'Waiting')
   tick()
 }

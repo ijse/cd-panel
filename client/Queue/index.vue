@@ -13,10 +13,10 @@
             <code> {{ index }} </code>
             <span class="tag task-action is-info has-text-justified"
               :class="!index ? 'is-success' : ''">
-              {{ task[1].toString() }}
+              {{ task.name }}
               <span class="icon is-pulled-right" v-if="!index"><i class="fas fa-spinner"></i></span>
             </span>
-            <a :href="task[2].html_url">{{ task[2].title }}</a>
+            <a :href="task.pr.html_url">#{{ task.number }} {{ task.pr.title }}</a>
           </td>
           <td>
             <button class="delete has-text-danger">

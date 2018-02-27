@@ -27,7 +27,7 @@ class MR extends Emitter {
       .value()
   }
   get list () {
-    return db.get('list').value()
+    return db.get('list').cloneDeep().value()
   }
   set list (list) {
     const curList = this.list

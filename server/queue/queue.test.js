@@ -13,39 +13,38 @@ describe('server/build/queue', function () {
 
   it('should save queue content right', () => {
     db.clear()
-    db.append([100, ['task1']])
-    db.append([100, ['task2']])
+    db.append({ number: 100, name: 'task1' })
+    db.append({ number: 100, name: 'task2' })
 
-    assert.equal(db.list[0][1][0], 'task1')
-    assert.equal(db.list[1][1][0], 'task2')
+    assert.equal(db.list[0].name, 'task1')
+    assert.equal(db.list[1].name, 'task2')
   })
 
   it('should insert task at index 1', () => {
     db.clear()
-    db.append([100, ['task1']])
-    db.append([100, ['task2']])
-    db.append([100, ['task3']])
-
-    db.prepend([101, ['task0']])
+    db.append({ number: 100, name: 'task1' })
+    db.append({ number: 100, name: 'task2' })
+    db.append({ number: 100, name: 'task3' })
+    db.prepend({ number: 101, name: 'task0' })
 
     assert.equal(db.list.length, 4)
-    assert.equal(db.list[1][0], 101)
+    assert.equal(db.list[1].number, 101)
   })
 
   it('should start the first item', () => {
     db.clear()
-    db.append([100, ['task1']])
-    db.append([100, ['task2']])
+    db.append({ number: 100, name: 'task1' })
+    db.append({ number: 100, name: 'task2' })
 
     assert.equal(db.current, null)
 
     const task = db.startNext()
     assert.ok(db.current)
-    assert.equal(db.current[1][0], 'task1')
+    assert.equal(db.current.name, 'task1')
 
     // check queue list
     assert.equal(db.list.length, 2)
-    assert.equal(db.list[0][1][0], 'task1')
+    assert.equal(db.list[0].name, 'task1')
   })
 
   it('should remove the first item when finish', () => {
@@ -54,41 +53,31 @@ describe('server/build/queue', function () {
 
     // check queue list
     assert.equal(db.list.length, 1)
-    assert.equal(db.list[0][1][0], 'task2')
+    assert.equal(db.list[0].name, 'task2')
   })
 
   it('should not append duplicate tasks', () => {
     db.clear()
-    const task = [ 100, [ 'download' ] ]
+    const task = { number: 100, name: 'task1' }
+
     db.append(task)
     assert.equal(db.list.length, 1)
+
     db.append(task)
     assert.equal(db.list.length, 1)
   })
 
   it('should remove all items which number is this', () => {
     db.clear()
-    db.append([ 100, ['download'] ])
-    db.append([ 100, ['prepare'] ])
-    db.append([ 101, ['prepare'] ])
-    db.append([ 101, ['deploy'] ])
-    db.append([ 100, ['deploy'] ])
+    db.append({ number: 100, name: 'download' })
+    db.append({ number: 100, name: 'prepare' })
+    db.append({ number: 101, name: 'prepare' })
+    db.append({ number: 101, name: 'deploy' })
+    db.append({ number: 100, name: 'deploy' })
 
     assert.equal(db.list.length, 5)
-    db.removeTask(100)
+    db.removeTask(t => t.number === 100)
     assert.equal(db.list.length, 2)
-  })
-
-  it('should remove items by number and name', () => {
-    db.clear()
-    db.append([ 100, ['download'] ])
-    db.append([ 100, ['prepare'] ])
-    db.append([ 101, ['prepare'] ])
-    db.append([ 101, ['deploy'] ])
-    db.append([ 100, ['deploy'] ])
-
-    db.removeTask(101, 'deploy')
-    assert.equal(db.list.length, 4)
   })
 
   after(() => {
