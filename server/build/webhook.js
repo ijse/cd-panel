@@ -21,7 +21,7 @@ module.exports = async ctx => {
   const payload = ctx.request.body
 
   if (ctx.get('X-GitHub-Event') === 'pull_request') {
-    if (payload.action === 'synchronize') {
+    if (payload.action === 'synchronize' || payload.action === 'opened') {
       handlePRUpdate()
       ctx.body = 'update pr build'
     }
