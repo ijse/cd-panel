@@ -76,6 +76,19 @@ exports.createBuild = async number => {
 exports.makeRelease = async (number, target) => {
   queue.removeTask(number, 'deploy')
   queue.prepend([number, ['deploy', target]])
+  mr.updateStatus(number, 'Waiting')
+  tick()
+}
+
+exports.closePR = async number => {
+  // check if exist task for this number
+  if (queue.current && queue.current[0] === number) {
+    // stop current task
+    queue.current.build.kill()
+  }
+  queue.removeTask(number)
+  queue.append([number, ['clean']])
+  mr.updateStatus(number, 'Waiting')
   tick()
 }
 

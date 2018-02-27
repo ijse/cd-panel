@@ -10,8 +10,13 @@ function handlePRUpdate (payload) {
   // that the pull request is tracking
 
   service.createBuild(payload.number)
-  // ensure to start processLoop
-  service.tick()
+}
+
+function handlePRClose (payload) {
+  service.closePR(payload.number)
+
+  // update pr list
+  fetchList()
 }
 
 module.exports = async ctx => {
@@ -24,6 +29,10 @@ module.exports = async ctx => {
     if (payload.action === 'synchronize' || payload.action === 'opened') {
       handlePRUpdate(payload)
       ctx.body = 'update pr build'
+    }
+    if (payload.action === 'closed') {
+      handlePRClose(payload)
+      ctx.body = 'clean pr'
     }
   }
 }
