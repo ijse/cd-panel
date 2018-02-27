@@ -25,5 +25,9 @@ module.exports = async ctx => {
       handlePRUpdate(payload)
       ctx.body = 'update pr build'
     }
+    if (payload.action === 'closed') {
+      handlePRClose(payload)
+      ctx.body = 'clean pr'
+    }
   }
 }

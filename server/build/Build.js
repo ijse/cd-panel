@@ -95,6 +95,10 @@ class Build {
   deploy (target) {
     return this.exec(`TARGET=${target} npm run deploy`)
   }
+
+  clean () {
+    return this.exec(`cd .. && rm -rf ${this.workspace}`)
+  }
 }
 
 module.exports = Build
