@@ -35,7 +35,7 @@ class MR extends Emitter {
       const old = curList.find(t => t.number === item.number) || {}
 
       // merge with old
-      item.buildStats = old.buildStats || 'Pending'
+      item.buildStats = old.buildStats || 'Waiting'
       return item
     })
     db.set('list', newList).write()

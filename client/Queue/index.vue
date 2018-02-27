@@ -19,8 +19,7 @@
             <a :href="task.pr.html_url">#{{ task.number }} {{ task.pr.title }}</a>
           </td>
           <td>
-            <button class="delete has-text-danger">
-            </button>
+            <button class="delete has-text-danger" @click="remove(task)"></button>
           </td>
         </tr>
       </tbody>
@@ -39,10 +38,22 @@
     activated () {
       this.load()
     },
+    sockets: {
+      'queue-update' (newList) {
+        this.list = newList
+        console.log('list updated')
+      }
+    },
     methods: {
       async load () {
         const ret = await this.$http.get('/queue')
         this.list = ret.data
+      },
+      async remove (task) {
+        await this.$http({
+          method: 'delete',
+          url: `/queue/remove/${task.id}`
+        })
       }
     }
   }

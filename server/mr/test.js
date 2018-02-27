@@ -16,7 +16,7 @@ describe('server/mr', function () {
   })
 
   it('should update pr status', () => {
-    assert.equal(db.list[0].buildStats, 'Pending')
+    assert.equal(db.list[0].buildStats, 'Waiting')
     db.updateStatus(pr.number, 'download')
     assert.equal(db.list[0].buildStats, 'download')
   })

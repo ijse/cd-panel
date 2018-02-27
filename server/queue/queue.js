@@ -47,30 +47,20 @@ class Queue extends Emitter {
 
   // when task finish, remove from queue
   finish (task, success = true) {
-    db.get('queue')
+    const result = db.get('queue')
       .remove(x => x.id === task.id)
       .write()
 
-    this.emit('finish', task, success)
+    this.emit('finish', success)
     if (this.list.length === 0) {
       this.emit('empty')
     }
     this.current = null
-  }
-
-  removeTask (number, name) {
-    db.get('queue')
-      .remove(t => {
-        if (!name) {
-          return t[0] === number
-        }
-        return t[0] === number && t[1][0] === name
-      })
-      .write()
+    return result
   }
 
   removeTask (fn) {
-    db.get('queue').remove(fn).write()
+    return db.get('queue').remove(fn).write()
   }
 
   clear () {

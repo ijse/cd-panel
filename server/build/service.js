@@ -50,7 +50,7 @@ const tick = () => {
       setStatus('fail', task)
       return stderr
     })
-    // always call next tick()
+  // always call next tick()
     .then((output) => {
       tick()
       return output
@@ -69,14 +69,14 @@ exports.createBuild = async number => {
   queue.append({ number, name: 'download' })
   queue.append({ number, name: 'prepare' })
   queue.append({ number, name: 'build' })
-  mr.updateStatus(number, 'Waiting')
+  mr.updateStatus(number, 'Pending')
   tick()
 }
 
 exports.makeRelease = async (number, target) => {
   queue.removeTask(t => t.number === number && t.name === 'deploy')
   queue.prepend({ number, name: 'deploy', target })
-  mr.updateStatus(number, 'Waiting')
+  mr.updateStatus(number, 'Pending')
   tick()
 }
 
@@ -88,7 +88,7 @@ exports.closePR = async number => {
   }
   queue.removeTask(number)
   queue.append({ number, name: 'clean' })
-  mr.updateStatus(number, 'Waiting')
+  mr.updateStatus(number, 'Pending')
   tick()
 }
 
