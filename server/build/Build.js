@@ -67,7 +67,7 @@ class Build {
 
   download () {
     const repoExist = shelljs.test('-d', join(this.workspace, '.git'))
-    const cmd = !repoExist ?
+    let cmd = !repoExist ?
       `git clone --depth=1 --no-single-branch -b ${this.branch} ${this.repoUrl} .`
       : `git fetch && git pull`
 
