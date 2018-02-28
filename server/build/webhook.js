@@ -1,6 +1,7 @@
 const service = require('./service')
 const mr = require('app/server/mr/db')
 const fetchList = require('app/server/mr/fetchList')
+const jdb = require('app/server/journal/db')
 
 function handlePRUpdate (payload) {
   // update pr list
@@ -29,10 +30,18 @@ module.exports = async ctx => {
     if (payload.action === 'synchronize' || payload.action === 'opened') {
       handlePRUpdate(payload)
       ctx.body = 'update pr build'
+      jdb.logTask({
+        number: payload.number,
+        desc: `Webhook that #${payload.number} update`
+      })
     }
     if (payload.action === 'closed') {
       handlePRClose(payload)
       ctx.body = 'clean pr'
+      jdb.logTask({
+        number: payload.number,
+        desc: `Webhook that #${payload.number} close`
+      })
     }
   }
 }

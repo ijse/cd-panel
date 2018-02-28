@@ -1,4 +1,5 @@
 const { Base } = require('app/server/db')
+const TIME_30_DAY_BEFORE = Date.now() - 30 * 24 * 60 * 60
 
 /**
  * log = {
@@ -32,6 +33,16 @@ class Journal extends Base {
       .value()
   }
 
+  log (data) {
+    this.db.get('list')
+      .push(data)
+      // remove data before 30day
+      .remove(t => {
+        return t.ts < TIME_30_DAY_BEFORE
+      })
+      .write()
+  }
+
   logTask ({ number, desc }) {
     const data = {
       ts: Date.now(),
@@ -39,8 +50,7 @@ class Journal extends Base {
       number,
       desc
     }
-    this.db.get('list')
-      .push(data).write()
+    this.log(data)
   }
 }
 
