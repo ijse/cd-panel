@@ -1,5 +1,13 @@
 <template>
   <div class="monitor">
+    <nav class="level">
+      <div class="leve-left"></div>
+      <div class="level-right">
+        <p class="level-item">
+          <button class="button is-primary" @click="clearAll()">ClearAll</button>
+        </p>
+      </div>
+    </nav>
     <pre v-html="screen">
     </pre>
   </div>
@@ -17,6 +25,11 @@
     },
     created () {
       this.$socket.emit('open-monitor')
+    },
+    methods: {
+      clearAll () {
+        this.screen = ''
+      }
     }
   }
 </script>
