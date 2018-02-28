@@ -1,5 +1,5 @@
 <template>
-  <div class="socket-status">
+  <div class="socket-status is-inline-block">
     <div class="tags has-addons">
       <span class="tag is-dark">Socket</span>
       <span class="tag is-success" v-if="connected"> Connect </span>
