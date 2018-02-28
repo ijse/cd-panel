@@ -15,7 +15,7 @@
       <div class="navbar-start">
         <main-router-link to="/board" class="navbar-item"> Board </main-router-link>
         <main-router-link to="/queue" class="navbar-item"> Queue </main-router-link>
-        <main-router-link to="/backlog" class="navbar-item"> Backlog </main-router-link>
+        <main-router-link to="/journal" class="navbar-item"> Journal </main-router-link>
         <main-router-link to="/monitor" class="navbar-item"> Monitor </main-router-link>
         <main-router-link to="/setting" class="navbar-item"> Setting </main-router-link>
         <main-router-link to="/help" class="navbar-item"> Help </main-router-link>

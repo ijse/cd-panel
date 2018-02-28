@@ -2,6 +2,7 @@ const queue = require('app/server/queue/queue')
 const Build = require('./Build')
 const mr = require('app/server/mr/db')
 const statsDB = require('app/server/stats/db')
+const jdb = require('app/server/journal/db')
 
 const setStatus = (type, { number, name }) => {
   const map = {
@@ -45,11 +46,19 @@ const tick = () => {
     .then(stdout => {
       queue.finish(task, true)
       setStatus('finish', task)
+      jdb.logTask({
+        number: task.number,
+        desc: `Success of task ${task.name}`
+      })
       return stdout
     })
     .catch(stderr => {
       queue.finish(task, false)
       setStatus('fail', task)
+      jdb.logTask({
+        number: task.number,
+        desc: `Error of task ${task.name}`
+      })
       return stderr
     })
   // always call next tick()
@@ -74,6 +83,7 @@ exports.createBuild = async number => {
   mr.updateStatus(number, 'Pending')
 
   statsDB.increase('Build Time')
+  jdb.logTask({ number, desc: 'Create new build' })
   tick()
 }
 
@@ -83,6 +93,7 @@ exports.makeRelease = async (number, target) => {
   mr.updateStatus(number, 'Pending')
 
   statsDB.increase('Deploy Time')
+  jdb.logTask({ number, desc: 'Create new deploy' })
   tick()
 }
 

@@ -2,6 +2,7 @@ import Page404 from './404'
 import Dashboard from './Dashboard'
 import Board from './Board'
 import Queue from './Queue'
+import Journal from './Journal'
 import Setting from './Setting'
 import Monitor from './Monitor'
 
@@ -12,6 +13,8 @@ const routes = [
     path: '/board', component: Board },
   { name: 'Queue',
     path: '/queue', component: Queue },
+  { name: 'Journal',
+    path: '/journal', component: Journal },
   { name: 'Setting',
     path: '/setting', component: Setting },
   { name: 'Monitor',

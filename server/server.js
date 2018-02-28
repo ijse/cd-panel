@@ -46,6 +46,7 @@ app.router.get('/*', async (ctx, next) => {
 require('./setting').call(app, app)
 require('./mr').call(app, app)
 require('./queue').call(app, app)
+require('./journal').call(app, app)
 require('./build').call(app, app)
 require('./stats').call(app, app)
 require('./monitor').call(app, app)
