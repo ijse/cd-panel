@@ -5,6 +5,7 @@
       <div class="level-right">
         <p class="level-item">
           <button class="button is-primary"
+            :class="{ 'is-loading': isLoading }"
             @click="load()">Reload</button>
         </p>
       </div>
@@ -32,6 +33,7 @@
   export default {
     name: 'Journal',
     data: () => ({
+      isLoading: false,
       list: null
     }),
     activated () {
@@ -39,8 +41,10 @@
     },
     methods: {
       async load () {
+        this.isLoading = true
         const ret = await this.$http.get('/journal')
         this.list = ret.data
+        this.isLoading = false
       }
     },
     filters: {
