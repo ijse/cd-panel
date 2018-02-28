@@ -36,6 +36,8 @@ const tick = () => {
   if (!task) return
 
   setStatus('start', task)
+  statsDB.increase('Run Tasks')
+
   // run next task
   const build = Build.runTask(task)
   queue.current.build = build
@@ -70,6 +72,8 @@ exports.createBuild = async number => {
   queue.append({ number, name: 'prepare' })
   queue.append({ number, name: 'build' })
   mr.updateStatus(number, 'Pending')
+
+  statsDB.increase('Build Time')
   tick()
 }
 
@@ -77,6 +81,8 @@ exports.makeRelease = async (number, target) => {
   queue.removeTask(t => t.number === number && t.name === 'deploy')
   queue.prepend({ number, name: 'deploy', target })
   mr.updateStatus(number, 'Pending')
+
+  statsDB.increase('Deploy Time')
   tick()
 }
 
