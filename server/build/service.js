@@ -57,7 +57,7 @@ const tick = () => {
       setStatus('fail', task)
       jdb.logTask({
         number: task.number,
-        desc: `Error of task ${task.name}`
+        desc: `Error of task ${task.name}: ${stderr}`
       })
       return stderr
     })
