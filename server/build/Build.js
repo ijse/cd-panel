@@ -34,7 +34,7 @@ class Build {
     this.repoUrl = pr.head.repo.clone_url
       .replace(/\/\//, `//${config.ghToken}@`)
     this.branch = pr.head.ref
-    this.mainBranch = pr.base.ref
+    this.mainBranch = pr.head.repo.default_branch
     this.number = pr.number
     this.workspace = join(workDir, '' + this.number)
 
