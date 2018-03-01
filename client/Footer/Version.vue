@@ -14,6 +14,10 @@ export default {
   }),
   sockets: {
     version (version) {
+      // if new version, reload page
+      if (this.version && this.version !== version) {
+        return location.reload()
+      }
       this.version = version
     }
   }
