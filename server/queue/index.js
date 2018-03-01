@@ -26,7 +26,7 @@ module.exports = app => {
 
   app.router.del('/queue/remove/:id', async ctx => {
     const taskId = ctx.params.id
-    if (taskId === queue.current.id) {
+    if (queue.current && taskId === queue.current.id) {
       console.log('Kill the process of %s', taskId)
       queue.current.build.kill()
     }
