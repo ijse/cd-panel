@@ -34,6 +34,7 @@ class Build {
     this.repoUrl = pr.head.repo.clone_url
       .replace(/\/\//, `//${config.ghToken}@`)
     this.branch = pr.head.ref
+    this.mainBranch = pr.base.ref
     this.number = pr.number
     this.workspace = join(workDir, '' + this.number)
 
@@ -68,10 +69,12 @@ class Build {
   download () {
     const repoExist = shelljs.test('-d', join(this.workspace, '.git'))
     let cmd = !repoExist ?
-      `git clone --depth=1 --no-single-branch -b ${this.branch} ${this.repoUrl} .`
+      // first download
+      `git clone -b ${this.branch} ${this.repoUrl} .`
+      // update
       : `git fetch && git reset --hard FETCH_HEAD && git clean -df `
 
-    cmd += ' && git merge origin/master --no-edit'
+    cmd += ` && git merge origin/${this.mainBranch} --no-edit`
     return this.exec(cmd)
   }
 
