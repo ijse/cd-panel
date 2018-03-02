@@ -41,6 +41,7 @@
           </td>
           <td>
             <RedoButton :disabled="!canRestart(mr)"
+              :class="{ 'is-loading': isRestarting }"
               @click.native="restart(mr)"></RedoButton>
             <DeployButton :disabled="!canDeploy(mr)"
               @deploy="deployTo(mr, arguments[0])" :setting="setting"></DeployButton>
@@ -68,6 +69,7 @@
     },
     data: () => ({
       list: [],
+      isRestarting: false,
       setting: {}
     }),
     sockets: {
@@ -110,7 +112,9 @@
       },
       async restart (mr) {
         if (!this.canRestart(mr)) return
+        this.isRestarting = true
         await this.$http.post('/restart', { number: mr.number })
+        this.isRestarting = false
       },
       async deployTo (mr, target) {
         await this.$http.post('/deploy', {
