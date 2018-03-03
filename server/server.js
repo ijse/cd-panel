@@ -20,7 +20,6 @@ app.db = require('./db')
 const server = require('http').createServer(app.callback())
 app.io = require('socket.io')(server)
 app.io.on('connect', socket => {
-  console.log('send version..', config.get('pkg.version'))
   app.io.emit('version', config.get('pkg.version'))
 })
 app.server = server
