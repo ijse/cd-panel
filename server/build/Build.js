@@ -24,19 +24,21 @@ const workDir = config.get('workDir')
 class Build {
   static runTask (task) {
     const pr = mr.find({ number: task.number })
-    const build = new Build(pr)
+    if (!pr) {
+      return Promise.reject('PR Not Found')
+    }
+    const build = new Build(task.number, pr)
     build.promise = build[task.name](task)
     return build
   }
 
-  constructor (pr) {
-    this.pr = pr
-    this.repoUrl = pr.head.repo.clone_url
+  constructor ({ number, head }) {
+    this.id = number
+    this.repoUrl = head.repo.clone_url
       .replace(/\/\//, `//${config.ghToken}@`)
-    this.branch = pr.head.ref
-    this.mainBranch = pr.head.repo.default_branch
-    this.number = pr.number
-    this.workspace = join(workDir, '' + this.number)
+    this.branch = head.ref
+    this.mainBranch = head.repo.default_branch
+    this.workspace = join(workDir, '' + this.id)
 
     shelljs.mkdir('-p', this.workspace)
   }
@@ -47,7 +49,7 @@ class Build {
     }
     return new Promise(resolve => {
       shelljs.cd(this.workspace)
-      console.log(`>>>> Run task for #${this.number}@${this.branch}:`, cmd)
+      console.log(`>>>> Run task for #${this.id}@${this.branch}:`, cmd)
       this.worker = shelljs.exec(cmd, opts, (code, stdout, stderr) => {
         resolve([code, stdout, stderr])
       })

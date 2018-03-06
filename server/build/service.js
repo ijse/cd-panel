@@ -87,7 +87,7 @@ exports.createBuild = async number => {
   tick()
 }
 
-exports.makeRelease = async (number, target) => {
+const makeDeploy = async (number, target) => {
   queue.removeTask(t => t.number === number && t.name === 'deploy')
   queue.prepend({ number, name: 'deploy', target })
   mr.updateStatus(number, 'Pending')
@@ -95,6 +95,11 @@ exports.makeRelease = async (number, target) => {
   statsDB.increase('Deploy Time')
   jdb.logTask({ number, desc: 'Create new deploy' })
   tick()
+}
+exports.makeDeploy = makeDeploy
+
+exports.makeRelease = async (number) => {
+  return makeDeploy(number, 'online')
 }
 
 exports.closePR = async number => {

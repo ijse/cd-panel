@@ -32,7 +32,7 @@ describe('server/build/service', function () {
   })
 
   it('should run release', done => {
-    service.makeRelease(pr.number, 'test')
+    service.makeDeploy(pr.number, 'test')
     queue.once('empty', () => {
       const str = shelljs.cat(join(workspace, 'dist/release')).toString()
       assert.equal(str, 'test\n')

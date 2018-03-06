@@ -10,4 +10,6 @@ github.authenticate({
   token
 })
 
+github.$repo = config.get('ghRepo')
+
 module.exports = github
