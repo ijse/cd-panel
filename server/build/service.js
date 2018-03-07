@@ -68,7 +68,7 @@ const tick = () => {
     })
 }
 
-exports.createBuild = async number => {
+const createBuild = async number => {
   // check if exist task for this number
   if (queue.current && queue.current.number === number) {
     // stop current task
@@ -86,10 +86,11 @@ exports.createBuild = async number => {
   jdb.logTask({ number, desc: 'Create new build' })
   tick()
 }
+exports.createBuild = createBuild
 
 const makeDeploy = async (number, target) => {
   queue.removeTask(t => t.number === number && t.name === 'deploy')
-  queue.prepend({ number, name: 'deploy', target })
+  queue.append({ number, name: 'deploy', target })
   mr.updateStatus(number, 'Pending')
 
   statsDB.increase('Deploy Time')
@@ -99,7 +100,10 @@ const makeDeploy = async (number, target) => {
 exports.makeDeploy = makeDeploy
 
 exports.makeRelease = async (number) => {
-  return makeDeploy(number, 'online')
+  // must ensure build with lastest commit
+  createBuild(number)
+
+  makeDeploy(number, 'online')
 }
 
 exports.closePR = async number => {
