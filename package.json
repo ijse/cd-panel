@@ -1,7 +1,7 @@
 {
   "name": "cd-panel",
   "description": "a Continue Deploy panel",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "author": "Li Yi <i@ijser.cn>",
   "license": "MIT",
   "scripts": {
