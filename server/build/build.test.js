@@ -12,7 +12,7 @@ describe('server/build/build', function () {
   const workspace = join(config.get('workDir'), '' + pr.number)
 
   before(() => {
-    this.build = new Build(pr)
+    this.build = new Build(pr.number, pr.head)
   })
 
   it('should create workspace directory', () => {

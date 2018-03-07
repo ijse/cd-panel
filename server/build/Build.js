@@ -27,13 +27,13 @@ class Build {
     if (!pr) {
       return Promise.reject('PR Not Found')
     }
-    const build = new Build(task.number, pr)
+    const build = new Build(task.number, pr.head)
     build.promise = build[task.name](task)
     return build
   }
 
-  constructor ({ number, head }) {
-    this.id = number
+  constructor (id, head) {
+    this.id = id
     this.repoUrl = head.repo.clone_url
       .replace(/\/\//, `//${config.ghToken}@`)
     this.branch = head.ref
