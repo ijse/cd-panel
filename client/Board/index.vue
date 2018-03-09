@@ -45,7 +45,8 @@
               @click.native="restart(mr)"></RedoButton>
             <DeployButton :disabled="!canDeploy(mr)"
               @deploy="deployTo(mr, arguments[0])" :setting="setting"></DeployButton>
-            <ReleaseButton :disabled="!canDeploy(mr)"></ReleaseButton>
+            <ReleaseButton :disabled="!canDeploy(mr)"
+              @click.native="release(mr)"></ReleaseButton>
           </td>
         </tr>
       </tbody>
@@ -120,6 +121,11 @@
         await this.$http.post('/deploy', {
           number: mr.number,
           target
+        })
+      },
+      async release (mr) {
+        await this.$http.post('/release', {
+          number: mr.number
         })
       }
     }

@@ -38,7 +38,7 @@ module.exports = function () {
     const { number } = ctx.request.body
 
     try {
-      await github.pullRequests.merge({
+      const ret = await github.pullRequests.merge({
         ...github.$repo,
         merge_method: 'squash',
         number

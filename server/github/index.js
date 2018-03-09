@@ -10,6 +10,12 @@ github.authenticate({
   token
 })
 
-github.$repo = config.get('ghRepo')
+Object.defineProperties(github, {
+  $repo: {
+    get () {
+      return { ...config.get('ghRepo') }
+    }
+  }
+})
 
 module.exports = github

@@ -10,5 +10,6 @@ module.exports = function () {
 
   this.router.get('/mr', async ctx => {
     ctx.body = mrdb.list
+    fetchList()
   })
 }
