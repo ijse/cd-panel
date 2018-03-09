@@ -22,7 +22,7 @@
         <tr v-for="item in list">
           <td> {{ item.ts | format }} </td>
           <td> {{ item.type }} </td>
-          <td> {{ item.desc }} </td>
+          <td> <pre> {{ item.desc }} </pre> </td>
         </tr>
       </tbody>
     </table>
