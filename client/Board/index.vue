@@ -45,8 +45,7 @@
               @click.native="restart(mr)"></RedoButton>
             <DeployButton :disabled="!canDeploy(mr)"
               @deploy="deployTo(mr, arguments[0])" :setting="setting"></DeployButton>
-            <ReleaseButton :disabled="!canDeploy(mr)"
-              @click.native="release(mr)"></ReleaseButton>
+            <MergeButton :data="mr"></MergeButton>
           </td>
         </tr>
       </tbody>
@@ -55,7 +54,7 @@
 </template>
 <script>
   import DeployButton from './DeployButton'
-  import ReleaseButton from './ReleaseButton'
+  import MergeButton from './MergeButton'
   import BuildStats from './BuildStats'
   import RedoButton from './RedoButton'
   import moment from 'moment'
@@ -64,7 +63,7 @@
     name: 'Board',
     components: {
       DeployButton,
-      ReleaseButton,
+      MergeButton,
       RedoButton,
       BuildStats
     },
@@ -121,11 +120,6 @@
         await this.$http.post('/deploy', {
           number: mr.number,
           target
-        })
-      },
-      async release (mr) {
-        await this.$http.post('/release', {
-          number: mr.number
         })
       }
     }
