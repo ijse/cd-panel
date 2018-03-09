@@ -13,8 +13,9 @@
 
     <div class="dropdown-menu">
       <div class="dropdown-content">
-        <a href class="dropdown-item" v-for="target in targetList"
-          :disabled="disabled"
+        <a href class="dropdown-item"
+          v-for="target in targetList"
+          :disabled="isDisabled"
           @click.prevent="doDeploy(target)">
           {{ target }}
         </a>
@@ -26,26 +27,43 @@
   export default {
     name: 'DeployButton',
     props: {
-      setting: Object,
-      disabled: Boolean
+      data: Object
     },
     data: () => ({
+      setting: null,
       isActive: false
     }),
     computed: {
       targetList () {
-        if (this.setting.deployTypes) {
+        if (this.setting && this.setting.deployTypes) {
           return this.setting.deployTypes.split(',')
         }
        },
       isEmpty () {
         return !this.targetList || this.targetList.length < 1
+      },
+      isDisabled () {
+        return this.data.buildStats !== 'Ready'
       }
     },
+    created () {
+      this.loadSetting()
+    },
     methods: {
+      async deployTo (target) {
+        await this.$http.post('/deploy', {
+          number: this.data.number,
+          target
+        })
+      },
+      async loadSetting () {
+        const resp = await this.$http.get('/setting')
+        this.setting = resp.data
+      },
       doDeploy (target) {
         this.$emit('deploy', target)
         this.isActive = false
+        this.deployTo(target)
       }
     }
   }

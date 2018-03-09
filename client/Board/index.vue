@@ -40,11 +40,8 @@
             <BuildStats :stats="mr.buildStats"></BuildStats>
           </td>
           <td>
-            <RedoButton :disabled="!canRestart(mr)"
-              :class="{ 'is-loading': isRestarting }"
-              @click.native="restart(mr)"></RedoButton>
-            <DeployButton :disabled="!canDeploy(mr)"
-              @deploy="deployTo(mr, arguments[0])" :setting="setting"></DeployButton>
+            <RestartButton :data="mr"></RestartButton>
+            <DeployButton :data="mr"></DeployButton>
             <MergeButton :data="mr"></MergeButton>
           </td>
         </tr>
@@ -56,7 +53,7 @@
   import DeployButton from './DeployButton'
   import MergeButton from './MergeButton'
   import BuildStats from './BuildStats'
-  import RedoButton from './RedoButton'
+  import RestartButton from './RestartButton'
   import moment from 'moment'
 
   export default {
@@ -64,7 +61,7 @@
     components: {
       DeployButton,
       MergeButton,
-      RedoButton,
+      RestartButton,
       BuildStats
     },
     data: () => ({
@@ -92,35 +89,11 @@
     },
     created () {
       this.loadList()
-      this.loadSetting()
     },
     methods: {
-      canRestart (mr) {
-        // return ['Error', 'Pending'].includes(mr.buildStats)
-        return true
-      },
-      canDeploy (mr) {
-        return mr.buildStats === 'Ready'
-      },
       async loadList () {
         const resp = await this.$http.get('/mr')
         this.list = resp.data
-      },
-      async loadSetting () {
-        const resp = await this.$http.get('/setting')
-        this.setting = resp.data
-      },
-      async restart (mr) {
-        if (!this.canRestart(mr)) return
-        this.isRestarting = true
-        await this.$http.post('/restart', { number: mr.number })
-        this.isRestarting = false
-      },
-      async deployTo (mr, target) {
-        await this.$http.post('/deploy', {
-          number: mr.number,
-          target
-        })
       }
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <button class="button is-primary" :disabled="disabled">
+  <button class="button is-primary" :disabled="isDisabled">
     Release
   </button>
 </template>
@@ -7,7 +7,12 @@
   export default {
     name: 'ReleaseButton',
     props: {
-      disabled: Boolean
+      data: Object
+    },
+    computed: {
+      isDisabled () {
+        return this.data.buildStats !== 'Ready'
+      }
     }
   }
 </script>

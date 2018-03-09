@@ -1,5 +1,7 @@
 <template>
-  <button class="button is-primary" :disabled="disabled">
+  <button class="button is-primary"
+    @click="merge()"
+    :disabled="isDisabled">
     Merge
   </button>
 </template>
@@ -8,6 +10,11 @@
     name: 'ReleaseButton',
     props: {
       data: Object
+    },
+    computed: {
+      isDisabled () {
+        return this.data.buildStats !== 'Ready'
+      }
     },
     methods: {
       async merge () {
