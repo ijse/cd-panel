@@ -9,6 +9,7 @@ const config = {
     owner: 'tigerbrokers',
     repo: 'gem'
   },
+  execTimeout: 3 * 60 * 1000,
   dataDir: path.join(os.homedir(), '.cdpanel'),
   workDir: path.join(os.homedir(), '.cdpanel', 'workspace')
 }

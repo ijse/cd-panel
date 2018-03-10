@@ -43,7 +43,10 @@ class Build {
     shelljs.mkdir('-p', this.workspace)
   }
 
-  exec (cmd, opts = { async: true }) {
+  exec (cmd, opts = {
+    async: true,
+    timeout: config.get('execTimeout')
+  }) {
     if (this.worker) {
       this.kill()
     }
