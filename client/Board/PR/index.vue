@@ -78,9 +78,6 @@
       }
     },
     filters: {
-      timeToNow (dateStr) {
-        return moment(dateStr).toNow()
-      },
       format (dateStr) {
         return moment(dateStr).format()
       }

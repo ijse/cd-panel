@@ -49,6 +49,7 @@ require('./journal').call(app, app)
 require('./build').call(app, app)
 require('./stats').call(app, app)
 require('./monitor').call(app, app)
+require('./repo').call(app, app)
 
 app.use(app.router.routes())
 

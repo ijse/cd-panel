@@ -4,6 +4,7 @@ import axios from 'axios'
 import Router from 'vue-router'
 import routes from './routes'
 import VueSocketIo from 'vue-socket.io'
+import moment from 'moment'
 
 Vue.use(VueSocketIo, '/')
 Vue.use(Router)
@@ -21,6 +22,9 @@ router.afterEach(to => {
 Vue.use({
   install (Vue) {
     Vue.prototype.$http = axios
+    Vue.filter('timeToNow', dateStr => {
+      return moment(dateStr).fromNow()
+    })
   }
 })
 
