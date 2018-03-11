@@ -99,11 +99,13 @@ const makeDeploy = async (number, target) => {
 }
 exports.makeDeploy = makeDeploy
 
-exports.makeRelease = async (number) => {
-  // must ensure build with lastest commit
-  createBuild(number)
-
-  makeDeploy(number, 'online')
+exports.makeRelease = (head) => {
+  const release = new Build('master', head)
+  release.download()
+  release.prepare()
+  release.build()
+  release.deploy()
+  return release
 }
 
 exports.closePR = async number => {

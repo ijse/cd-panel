@@ -1,7 +1,7 @@
 <template>
   <div class="board">
       <Tabs v-model="tabIndex"
-        :items="[ 'PR', 'Releases' ]"></Tabs>
+        :items="[ 'TEST PR', 'Releases' ]"></Tabs>
     <keep-alive>
       <PR v-if="tabIndex === 0"></PR>
       <Releases v-if="tabIndex === 1"></Releases>

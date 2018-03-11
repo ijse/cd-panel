@@ -1,5 +1,9 @@
 <template>
   <div class="releases">
+    <section>
+      <button class="button is-primary is-pulled-right"
+        @click="deploy()">Deploy Master</button>
+    </section>
     <table class="table is-fullwidth is-hoverable">
       <thead>
         <tr>
@@ -47,6 +51,9 @@
       async load () {
         const ret = await this.$http.get('/repo/master')
         this.commits = ret.data
+      },
+      deploy () {
+        this.$http.post('/release')
       }
     },
     filters: {

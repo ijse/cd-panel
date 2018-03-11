@@ -33,21 +33,4 @@ module.exports = function () {
     service.makeDeploy(number, target)
     ctx.status = 200
   })
-
-  this.router.post('/release', async ctx => {
-    const { number } = ctx.request.body
-
-    try {
-      const ret = await github.pullRequests.merge({
-        ...github.$repo,
-        merge_method: 'squash',
-        number
-      })
-    } catch (e) {
-      console.error(e)
-    }
-
-    service.makeRelease(number)
-    ctx.status = 200
-  })
 }

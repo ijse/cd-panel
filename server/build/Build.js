@@ -5,6 +5,7 @@ const shelljs = require('shelljs')
 
 const mr = require('app/server/mr/db')
 const workDir = config.get('workDir')
+const Emitter = require('events')
 
 /**
  * Steps:
@@ -21,7 +22,7 @@ const workDir = config.get('workDir')
  *   - npm run release
  *   - merge branch
  */
-class Build {
+class Build extends Emitter {
   static runTask (task) {
     const pr = mr.find({ number: task.number })
     if (!pr) {
@@ -41,6 +42,7 @@ class Build {
     this.workspace = join(workDir, '' + this.id)
 
     shelljs.mkdir('-p', this.workspace)
+    this.emit('init')
   }
 
   exec (cmd, opts = {
@@ -69,6 +71,7 @@ class Build {
       this.worker.kill()
       this.worker = null
     }
+    this.emit('kill')
   }
 
   download () {
@@ -80,6 +83,7 @@ class Build {
       : `git fetch && git reset --hard FETCH_HEAD && git clean -df `
 
     cmd += ` && git merge origin/${this.mainBranch} --no-edit`
+    this.emit('download')
     return this.exec(cmd)
   }
 
@@ -88,6 +92,7 @@ class Build {
     const cmd = hasYarn ? 'yarn' : 'npm install'
 
     this.setEnv(params)
+    this.emit('install')
     return this.exec(cmd)
   }
 
@@ -97,14 +102,21 @@ class Build {
   }
 
   build () {
+    this.emit('build')
     return this.exec('npm run build')
   }
 
   deploy ({ target }) {
+    this.emit('deploy')
     return this.exec(`TARGET=${target} npm run deploy`)
+      .then((...args) => {
+        this.emit('success')
+        return args
+      })
   }
 
   clean () {
+    this.emit('clean')
     return this.exec(`cd .. && rm -rf ${this.workspace}`)
   }
 }
