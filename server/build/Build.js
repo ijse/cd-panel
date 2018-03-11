@@ -34,6 +34,7 @@ class Build extends Emitter {
   }
 
   constructor (id, head) {
+    super()
     this.id = id
     this.repoUrl = head.repo.clone_url
       .replace(/\/\//, `//${config.ghToken}@`)
