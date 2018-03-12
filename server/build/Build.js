@@ -25,10 +25,11 @@ const Emitter = require('events')
 class Build extends Emitter {
   static runTask (task) {
     const pr = mr.find({ number: task.number })
+    let build
     if (!pr) {
-      build.promise = Promise.reject('PR Not Found')
+      build = null
     } else {
-      const build = new Build(task.number, pr.head)
+      build = new Build(task.number, pr.head)
       build.promise = build[task.name](task)
     }
     return build

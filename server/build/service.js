@@ -41,6 +41,15 @@ const tick = () => {
 
   // run next task
   const build = Build.runTask(task)
+  if (!build) {
+    queue.finish(task, true)
+    setStatus('fail', task)
+    jdb.logTask({
+      number: task.number,
+      desc: `Error of task ${task.name}`
+    })
+    return tick()
+  }
   queue.current.build = build
   return build.promise
     .then(stdout => {
