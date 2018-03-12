@@ -28,7 +28,10 @@ module.exports = async ctx => {
 
   if (ctx.get('X-GitHub-Event') === 'pull_request') {
     if (payload.action === 'synchronize' || payload.action === 'opened') {
-      handlePRUpdate(payload)
+      // Wait 2sec to avoid PR not found error
+      setTimeout(() => {
+        handlePRUpdate(payload)
+      }, 2000)
       ctx.body = 'update pr build'
       jdb.logTask({
         number: payload.number,
