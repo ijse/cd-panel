@@ -2,8 +2,8 @@
   <div class="releases">
     <section>
       <button class="button is-primary is-pulled-right"
-        :disabled="releaseButtonStatus !== 'Release'"
-        @click="deploy()">{{ releaseButtonStatus }}</button>
+        :disabled="!releasable"
+        @click="deploy()">{{ releaseButtonText }}</button>
     </section>
     <table class="table is-fullwidth is-hoverable">
       <thead>
@@ -57,6 +57,16 @@
           return null
         }
         return this.commits[0].sha
+      },
+      releasable () {
+        return this.releaseButtonStatus === 'Release'
+      },
+      releaseButtonText () {
+        if (this.releasable) {
+          return 'Release'
+        } else {
+          return this.releaseButtonStatus + '...'
+        }
       }
     },
     methods: {
