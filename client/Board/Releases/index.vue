@@ -53,7 +53,7 @@
         this.commits = ret.data
       },
       deploy () {
-        this.$http.post('/release')
+        this.$http.post('/repo/release')
       }
     },
     filters: {

@@ -32,7 +32,7 @@ module.exports = app => {
   })
 
   app.router.post('/repo/release', async ctx => {
-    const { sha } = ctx.request.body
+    const { sha } = ctx.request.body || 'master'
     const commit = await github.repos.getCommit({
       ...github.$repo,
       sha
