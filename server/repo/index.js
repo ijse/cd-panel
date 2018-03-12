@@ -5,7 +5,7 @@ const statsDB = require('app/server/stats/db')
 module.exports = app => {
   let cached = null
   app.router.get('/repo/master', ctx => {
-    github.repos.getCommits({
+    let fetchData = github.repos.getCommits({
       ...github.$repo,
       sha: 'heads/master'
     })
@@ -13,7 +13,11 @@ module.exports = app => {
       if (!cached) ctx.body = ret.data
       cached = ret.data
     })
-    if (cached) ctx.body = cached
+    if (cached) {
+      ctx.body = cached
+    } else {
+      return fetchData
+    }
   })
 
   app.router.post('/repo/merge', async ctx => {
