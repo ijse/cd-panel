@@ -45,7 +45,7 @@ class Build extends Emitter {
     this.workspace = join(workDir, '' + this.id)
 
     shelljs.mkdir('-p', this.workspace)
-    this.emit('init')
+    this.emit('status', 'init')
   }
 
   exec (cmd, opts = {
@@ -74,7 +74,7 @@ class Build extends Emitter {
       this.worker.kill()
       this.worker = null
     }
-    this.emit('kill')
+    this.emit('status', 'kill')
   }
 
   download () {
@@ -86,7 +86,7 @@ class Build extends Emitter {
       : `git fetch && git reset --hard FETCH_HEAD && git clean -df `
 
     cmd += ` && git merge origin/${this.mainBranch} --no-edit`
-    this.emit('download')
+    this.emit('status', 'download')
     return this.exec(cmd)
   }
 
@@ -95,7 +95,7 @@ class Build extends Emitter {
     const cmd = hasYarn ? 'yarn' : 'npm install'
 
     this.setEnv(params)
-    this.emit('install')
+    this.emit('status', 'install')
     return this.exec(cmd)
   }
 
@@ -105,21 +105,21 @@ class Build extends Emitter {
   }
 
   build () {
-    this.emit('build')
+    this.emit('status', 'build')
     return this.exec('npm run build')
   }
 
   deploy ({ target }) {
-    this.emit('deploy')
+    this.emit('status', 'deploy')
     return this.exec(`TARGET=${target} npm run deploy`)
       .then((...args) => {
-        this.emit('success')
+        this.emit('status', 'success')
         return args
       })
   }
 
   clean () {
-    this.emit('clean')
+    this.emit('status', 'clean')
     return this.exec(`cd .. && rm -rf ${this.workspace}`)
   }
 }

@@ -2,7 +2,8 @@
   <div class="releases">
     <section>
       <button class="button is-primary is-pulled-right"
-        @click="deploy()">Deploy Master</button>
+        :disabled="releaseButtonStatus !== 'Release'"
+        @click="deploy()">{{ releaseButtonStatus }}</button>
     </section>
     <table class="table is-fullwidth is-hoverable">
       <thead>
@@ -39,21 +40,39 @@
   export default {
     name: 'Releases',
     data: () => ({
+      releaseButtonStatus: '',
       commits: []
     }),
+    sockets: {
+      releasing (period) {
+        this.releaseButtonStatus = period
+      }
+    },
     activated () {
       this.load()
     },
-    created () {
-      this.load()
+    computed: {
+      latestSHA () {
+        if (!this.commits || !this.commits.length) {
+          return null
+        }
+        return this.commits[0].sha
+      }
     },
     methods: {
       async load () {
-        const ret = await this.$http.get('/repo/master')
+        let ret
+        ret = await this.$http.get('/repo/release/status')
+        this.releaseButtonStatus = ret.data.status
+
+        ret = await this.$http.get('/repo/master')
         this.commits = ret.data
+
       },
       deploy () {
-        this.$http.post('/repo/release')
+        this.$http.post('/repo/release', {
+          sha: this.latestSHA
+        })
       }
     },
     filters: {

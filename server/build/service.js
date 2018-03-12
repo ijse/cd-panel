@@ -111,9 +111,11 @@ exports.makeDeploy = makeDeploy
 exports.makeRelease = (head) => {
   const release = new Build('master', head)
   release.download()
-  release.prepare()
-  release.build()
-  release.deploy()
+    .then(() => release.prepare())
+    .then(() => release.build())
+    .then(() => release.deploy({
+      target: 'production'
+    }))
   return release
 }
 

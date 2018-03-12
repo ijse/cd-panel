@@ -31,18 +31,36 @@ module.exports = app => {
     ctx.status = 200
   })
 
+  let release, releaseStatus = 'Release'
+  app.router.get('/repo/release/status', async ctx => {
+    ctx.body = { status: releaseStatus }
+  })
+
   app.router.post('/repo/release', async ctx => {
+    if (release) {
+      ctx.status = 501
+      return
+    }
+
+    const { data: repo } = await github.repos.get({
+      ...github.$repo
+    })
+
     const { sha } = ctx.request.body || 'master'
-    const commit = await github.repos.getCommit({
+    const { data: refData } = await github.repos.getCommit({
       ...github.$repo,
       sha
     })
-    const release = service.makeRelease(commit)
-    release.on('download', stats => app.io.emit('releasing', 'download'))
-    release.on('install', stats => app.io.emit('releasing', 'install'))
-    release.on('build', stats => app.io.emit('releasing', 'build'))
-    release.on('deploy', stats => app.io.emit('releasing', 'deploy'))
-    release.on('success', stats => app.io.emit('releasing', 'success'))
+    refData.repo = repo
+    refData.ref = 'master'
+    release = service.makeRelease(refData)
+    release.on('status', stats => {
+      releaseStatus = stats
+      if (stats === 'success') {
+        releaseStatus = 'Release'
+      }
+      app.io.emit('releasing', releaseStatus)
+    })
     statsDB.increase('releases')
   })
 }
