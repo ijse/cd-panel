@@ -26,10 +26,11 @@ class Build extends Emitter {
   static runTask (task) {
     const pr = mr.find({ number: task.number })
     if (!pr) {
-      return Promise.reject('PR Not Found')
+      build.promise = Promise.reject('PR Not Found')
+    } else {
+      const build = new Build(task.number, pr.head)
+      build.promise = build[task.name](task)
     }
-    const build = new Build(task.number, pr.head)
-    build.promise = build[task.name](task)
     return build
   }
 
