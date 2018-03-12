@@ -18,7 +18,7 @@
     },
     methods: {
       async merge () {
-        await this.$http.post('/merge', {
+        await this.$http.post('/repo/merge', {
           number: this.data.number
         })
       }
