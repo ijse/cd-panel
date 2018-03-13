@@ -60,8 +60,9 @@ module.exports = app => {
     release = service.makeRelease(refData)
     release.on('status', stats => {
       releaseStatus = stats
-      if (stats === 'success') {
+      if (stats === 'success' || stats === 'fail') {
         releaseStatus = 'Release'
+        release = null
       }
       app.io.emit('releasing', releaseStatus)
     })

@@ -116,6 +116,7 @@ exports.makeRelease = (head) => {
     .then(() => release.deploy({
       target: 'production'
     }))
+    .catch(() => release.emit('status', 'fail'))
   return release
 }
 
