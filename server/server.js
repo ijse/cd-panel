@@ -25,7 +25,9 @@ app.io.on('connect', socket => {
 app.server = server
 
 // middlewares
-app.use(morgan('dev'))
+if (config.get('debug')) {
+  app.use(morgan('dev'))
+}
 app.use(static(join(__dirname, '../dist')))
 
 app.use(bodyParser())

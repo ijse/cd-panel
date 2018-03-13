@@ -12,7 +12,7 @@
     "restart": "npm stop && npm start",
     "postinstall": "ln -sf ../ node_modules/app || true",
     "dev": "npm run dev:server 2>&1 & npm run dev:client",
-    "dev:server": "nodemon -w ./server server/start.js",
+    "dev:server": "nodemon -w ./server server/start.js -- --debug",
     "dev:client": "parcel watch --public-url / client/index.html",
     "build": "npm run clean && parcel build --public-url / client/index.html",
     "test": "npm run test:pre && npm run test:server",

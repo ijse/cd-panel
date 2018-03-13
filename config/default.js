@@ -1,7 +1,10 @@
 const path = require('path')
 const os = require('os')
 
+const isDebug = process.argv.includes('--debug')
+
 const config = {
+  debug: isDebug,
   pkg: require('../package.json'),
   port: process.env.PORT || 3000,
   ghToken: process.env.GH_TOKEN,
