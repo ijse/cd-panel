@@ -1,7 +1,7 @@
 {
   "name": "cd-panel",
   "description": "a Continue Deploy panel",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "author": "Li Yi <i@ijser.cn>",
   "license": "MIT",
   "scripts": {
@@ -10,7 +10,6 @@
     "start:prod": "forever start ./server/start.js -l ./logs/log.log -e ./logs/error.log -o ./logs/output.log",
     "stop": "forever stop ./server/start.js",
     "restart": "npm stop && npm start",
-
     "postinstall": "ln -sf ../ node_modules/app || true",
     "dev": "npm run dev:server 2>&1 & npm run dev:client",
     "dev:server": "nodemon -w ./server server/start.js",
