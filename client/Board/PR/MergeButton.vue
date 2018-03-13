@@ -13,7 +13,8 @@
     },
     computed: {
       isDisabled () {
-        return this.data.buildStats !== 'Ready'
+        return this.data.buildStats !== 'Ready' ||
+          !this.data.isApproved
       }
     },
     methods: {

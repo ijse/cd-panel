@@ -43,7 +43,7 @@
         return !this.targetList || this.targetList.length < 1
       },
       isDisabled () {
-        return this.data.buildStats !== 'Ready'
+        return this.data.buildStats !== 'Ready' || !this.data.isApproved
       }
     },
     created () {
