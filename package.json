@@ -5,8 +5,12 @@
   "author": "Li Yi <i@ijser.cn>",
   "license": "MIT",
   "scripts": {
-    "start": "npm run dev",
+    "start": "npm run start:prod",
     "start:lt": "lt -h http://local.ijser.cn -p 3000 -s devcdpanel",
+    "start:prod": "forever start ./server/start.js -l ./logs/log.log -e ./logs/error.log -o ./logs/output.log",
+    "stop": "forever stop ./server/start.js",
+    "restart": "npm stop && npm start",
+
     "postinstall": "ln -sf ../ node_modules/app || true",
     "dev": "npm run dev:server 2>&1 & npm run dev:client",
     "dev:server": "nodemon -w ./server server/start.js",
@@ -49,6 +53,7 @@
     "ansi-to-html": "^0.6.4",
     "axios": "^0.17.1",
     "config": "^1.29.4",
+    "forever": "^0.15.3",
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
     "koa-morgan": "^1.0.1",
