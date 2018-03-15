@@ -12,7 +12,16 @@ async function updateReviewStatus(pr) {
       number: pr.number
     })
 
-  pr.isApproved = !!data.length && data.every(d => d.state === 'APPROVED')
+  const reviewers = pr.requested_reviewers.map(r => r.login)
+
+  const reviewResult = {}
+  data.forEach(d => reviewResult[d.user.login] = d.state === 'APPROVED')
+
+  pr.isApproved = reviewers.every(r => reviewResult[r])
+
+  if (pr.number == 3065) {
+    console.log('>>>', pr.isApproved, data)
+  }
   return pr
 }
 
