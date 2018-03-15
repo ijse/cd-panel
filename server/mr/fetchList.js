@@ -23,10 +23,6 @@ async function updateReviewStatus(pr) {
   const reviewers = Object.keys(reviewResult)
   pr.isApproved = !!reviewers.length && reviewers.every(r => reviewResult[r])
 
-  if (pr.number == 3065) {
-    console.log('>>>', pr.isApproved, data)
-    console.log('>>>>', reviewResult, pr)
-  }
   return pr
 }
 
