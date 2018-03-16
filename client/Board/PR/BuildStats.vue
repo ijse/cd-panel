@@ -5,10 +5,7 @@
   export default {
     name: 'BuildStats',
     props: {
-      stats: {
-        type: String,
-        default: 'halt'
-      }
+      data: Object
     },
     computed: {
       cls () {
@@ -22,6 +19,23 @@
           'Ready': 'is-success'
         }
         return statsMap[this.stats]
+      },
+      stats () {
+        return this.data.buildStats || 'halt'
+      }
+    },
+    watch: {
+      'data.buildStats' (cur, old) {
+        if (cur === 'Ready') {
+          this.$notification.show(`PR#${pr.number} is Ready.`, {
+            body: pr.title
+          })
+        }
+        if (cur === 'Error') {
+          this.$notification.show(`PR#${pr.number} is Error.`, {
+            body: pr.title
+          })
+        }
       }
     }
   }

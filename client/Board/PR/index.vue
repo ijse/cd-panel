@@ -42,7 +42,7 @@
           </footer>
         </td>
         <td>
-          <BuildStats :stats="mr.buildStats"></BuildStats>
+          <BuildStats :data="mr"></BuildStats>
         </td>
         <td>
           <RestartButton :data="mr"></RestartButton>

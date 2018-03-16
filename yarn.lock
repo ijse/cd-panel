@@ -5609,6 +5609,10 @@ vue-hot-reload-api@^2.1.0:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.2.4.tgz#683bd1d026c0d3b3c937d5875679e9a87ec6cd8f"
 
+vue-native-notification@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/vue-native-notification/-/vue-native-notification-1.0.2.tgz#973b42c9c30f86627828ac76bc127d9f5250f6b9"
+
 vue-router@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.1.tgz#d9b05ad9c7420ba0f626d6500d693e60092cc1e9"

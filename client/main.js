@@ -5,6 +5,7 @@ import Router from 'vue-router'
 import routes from './routes'
 import VueSocketIo from 'vue-socket.io'
 import moment from 'moment'
+import Notification from 'vue-native-notification'
 
 Vue.use(VueSocketIo, '/')
 Vue.use(Router)
@@ -27,6 +28,12 @@ Vue.use({
     })
   }
 })
+
+// notification
+Vue.use(Notification, {
+  requestOnNotify: true
+})
+Vue.notification.requestPermission()
 
 window.app = new Vue({
   el: '#app',
