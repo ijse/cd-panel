@@ -29,13 +29,15 @@
         const pr = this.data
         if (cur === 'Ready') {
           this.$notification.show(`PR#${pr.number} is Ready.`, {
-            body: pr.title
-          })
+            body: pr.title,
+            requireInteraction: true
+          }, {})
         }
         if (cur === 'Error') {
           this.$notification.show(`PR#${pr.number} is Error.`, {
-            body: pr.title
-          })
+            body: pr.title,
+            requireInteraction: true
+          }, {})
         }
       }
     }
