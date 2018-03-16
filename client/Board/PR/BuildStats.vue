@@ -26,6 +26,7 @@
     },
     watch: {
       'data.buildStats' (cur, old) {
+        const pr = this.data
         if (cur === 'Ready') {
           this.$notification.show(`PR#${pr.number} is Ready.`, {
             body: pr.title
