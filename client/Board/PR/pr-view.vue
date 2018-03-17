@@ -10,9 +10,14 @@
         </div>
       </header>
       <div class="quickview-body">
-        <a :href="data.html_url" target="_blank"
-          class="title is-size-5"> {{ data.title }} </a>
-        <pre class="content">{{ data.body | removeHeadSpaces }}</pre>
+        <h2 class="title">
+          <a :href="data.html_url" target="_blank"
+            class="title is-size-5"> {{ data.title }} </a>
+        </h2>
+
+        <div class="content">
+          <pre>{{ data.body | removeHeadSpaces }}</pre>
+        </div>
 
         <table class="table is-fullwidth is-narrow">
           <tr>
@@ -120,5 +125,8 @@ export default {
   }
   .quickview-body {
     padding: .8em;
+    & .title {
+      line-height: .75;
+    }
   }
 </style>
