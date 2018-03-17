@@ -18,6 +18,7 @@
   </div>
 </template>
 <script>
+  import UpdateCSSVar from './update-css.js'
   export default {
     name: 'ThemeSwitch',
     data: () => ({
@@ -73,12 +74,13 @@
         newLink.setAttribute('type', 'text/css')
         newLink.setAttribute('theme', true)
         newLink.setAttribute('href', theme.style)
+
         newLink.onload = () => {
           this.loader.classList.remove('is-active')
+          head.removeChild(oldLink)
+          UpdateCSSVar()
         }
-        window.setTimeout(() => {
-          head.replaceChild(newLink, oldLink)
-        }, 3000)
+        head.appendChild(newLink)
       }
     }
   }

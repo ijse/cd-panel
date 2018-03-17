@@ -14,16 +14,10 @@
         </td>
       </tr>
       <tr v-for="mr in list">
-        <td>
+        <td @click.prevent.stop="selectedPR = mr">
           <a :href="mr.html_url" target="_blank">
             <strong>#{{ mr.number }}</strong> {{ mr.title }}
           </a>
-          <!-- <span class="has-text-danger is-pulled-right" v-if="!mr.isApproved"> -->
-            <!-- Not Approved -->
-          <!-- </span> -->
-          <!-- <span class="has-text-success is-pulled-right" v-else> -->
-            <!-- Approved -->
-          <!-- </span> -->
           <div class="tags is-inline-block is-marginless">
             <span class="tag is-rounded"
               :style="{ 'border-color': '#' + label.color }"
@@ -54,6 +48,10 @@
         </td>
       </tr>
     </tbody>
+    <tfoot>
+      <PRView :data="selectedPR"
+        @close="selectedPR=null"></PRView>
+    </tfoot>
   </table>
 </template>
 <script>
@@ -62,10 +60,12 @@
   import BuildStats from './BuildStats'
   import RestartButton from './RestartButton'
   import moment from 'moment'
+  import PRView from './pr-view'
 
   export default {
     name: 'Board',
     components: {
+      PRView,
       DeployButton,
       MergeButton,
       RestartButton,
@@ -74,6 +74,7 @@
     data: () => ({
       list: [],
       isRestarting: false,
+      selectedPR: null,
       setting: {}
     }),
     sockets: {

@@ -12,7 +12,8 @@
       </keep-alive>
     </div>
     <Footer></Footer>
-    <div class="pageloader is-danger is-right-to-left" style="opacity: .5"
+    <div class="pageloader is-danger is-right-to-left"
+      style="opacity: .5"
       :class="{ 'is-active': !connected }">
       <span class="title">Connecting...</span>
     </div>
@@ -48,6 +49,7 @@ export default {
 <style>
   @import "bulma-tooltip/dist/bulma-tooltip.min.css";
   @import "bulma-pageloader/dist/bulma-pageloader.min.css";
+  @import "bulma-quickview/dist/bulma-quickview.min.css";
 
   html, body {
     height: 100%;
