@@ -54,12 +54,14 @@
           name,
           style: `https://jenil.github.io/bulmaswatch/${name.toLowerCase()}/bulmaswatch.min.css`
         }))
+      },
+      loader () {
+        return document.querySelector('body>.pageloader')
       }
     },
     methods: {
       switchTheme (theme) {
-        document.body.style.opacity = 0
-        document.body.style.visibility = 'hidden'
+        this.loader.classList.add('is-active')
 
         localStorage.setItem('theme', theme.name)
         this.themeOn = false
@@ -69,22 +71,19 @@
         const newLink = document.createElement('link')
         newLink.setAttribute('rel', 'stylesheet')
         newLink.setAttribute('type', 'text/css')
-        newLink.setAttribute('href', theme.style)
         newLink.setAttribute('theme', true)
+        newLink.setAttribute('href', theme.style)
         newLink.onload = () => {
-        document.body.style.visibility = 'visible'
-          document.body.style.opacity = 1
+          this.loader.classList.remove('is-active')
         }
-        head.replaceChild(newLink, oldLink)
+        window.setTimeout(() => {
+          head.replaceChild(newLink, oldLink)
+        }, 3000)
       }
     }
   }
 </script>
 <style>
-  body {
-    opacity: 0;
-    transition: opacity .5s;
-  }
   .navbar .navbar-dropdown {
     max-height: 500px;
     overflow: auto;

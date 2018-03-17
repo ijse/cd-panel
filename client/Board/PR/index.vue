@@ -46,7 +46,10 @@
         </td>
         <td>
           <RestartButton :data="mr"></RestartButton>
-          <DeployButton :data="mr"></DeployButton>
+          <DeployButton :data="mr"
+            :class="{ tooltip: !mr.isApproved }"
+            class="is-tooltip-danger"
+            data-tooltip="Not Approved"></DeployButton>
           <MergeButton :data="mr"></MergeButton>
         </td>
       </tr>
