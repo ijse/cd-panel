@@ -21,13 +21,13 @@
 
         <table class="table is-fullwidth is-narrow">
           <tr>
-            <th> <small>Status </small></th>
+            <th> Status </th>
             <td>
               <BuildStats :data="data"></BuildStats>
             </td>
           </tr>
           <tr>
-            <th> <small>Branch</small> </th>
+            <th> Branch </th>
             <td> <code>{{ data.head.ref }}</code></td>
           </tr>
           <tr>
@@ -40,7 +40,7 @@
             </td>
           </tr>
           <tr>
-            <th width="100"> <small>Create At</small> </th>
+            <th width="100"> Create At </th>
             <td>
               <time datetime="data.update_at" title="data.created_at">
                 {{ data.created_at | datetime}}
@@ -48,7 +48,7 @@
             </td>
           </tr>
           <tr>
-            <th width="100"> <small>Update At</small> </th>
+            <th width="100"> Update At </th>
             <td>
               <time datetime="data.update_at" title="data.update_at">
                 {{ data.update_at | toNow }}
@@ -127,6 +127,9 @@ export default {
     padding: .8em;
     & .title {
       line-height: .75;
+    }
+    & .table th {
+      font-size: .8em;
     }
   }
 </style>
