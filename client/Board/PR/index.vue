@@ -18,12 +18,12 @@
           <a :href="mr.html_url" target="_blank">
             <strong>#{{ mr.number }}</strong> {{ mr.title }}
           </a>
-          <span class="has-text-danger is-pulled-right" v-if="!mr.isApproved">
-            Not Approved
-          </span>
-          <span class="has-text-success is-pulled-right" v-else>
-            Approved
-          </span>
+          <!-- <span class="has-text-danger is-pulled-right" v-if="!mr.isApproved"> -->
+            <!-- Not Approved -->
+          <!-- </span> -->
+          <!-- <span class="has-text-success is-pulled-right" v-else> -->
+            <!-- Approved -->
+          <!-- </span> -->
           <div class="tags is-inline-block is-marginless">
             <span class="tag is-rounded"
               :style="{ 'border-color': '#' + label.color }"

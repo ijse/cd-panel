@@ -4,7 +4,8 @@
     <div class="dropdown-trigger">
       <button class="button" :disabled="isEmpty"
         @click="isActive = !isActive">
-        <span>Test In</span>
+        <span v-if="data.isApproved">Test In</span>
+        <span v-else class="has-text-danger">Test In</span>
         <span class="icon is-small">
           <i class="fas fa-angle-down" aria-hidden="true"></i>
         </span>
