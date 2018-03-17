@@ -50,13 +50,13 @@ module.exports = app => {
       ...github.$repo
     })
 
-    const { sha } = ctx.request.body || 'master'
+    const { sha } = ctx.request.body
     const { data: refData } = await github.repos.getCommit({
       ...github.$repo,
       sha
     })
     refData.repo = repo
-    refData.ref = 'master'
+    refData.ref = sha
     release = service.makeRelease(refData)
     release.on('status', stats => {
       releaseStatus = stats
@@ -64,8 +64,9 @@ module.exports = app => {
         releaseStatus = 'Release'
         release = null
       }
-      app.io.emit('releasing', releaseStatus)
+      app.io.emit('releasing', [releaseStatus, sha])
     })
     statsDB.increase('releases')
+    ctx.status = 200
   })
 }

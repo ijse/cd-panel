@@ -1,9 +1,7 @@
 <template>
   <div class="releases">
     <section>
-      <button class="button is-primary is-pulled-right"
-        :disabled="!releasable"
-        @click="deploy()">{{ releaseButtonText }}</button>
+      <ReleaseButton :sha="latestSHA"></ReleaseButton>
     </section>
     <table class="table is-fullwidth is-hoverable">
       <thead>
@@ -11,6 +9,7 @@
           <th>Name</th>
           <th>Author</th>
           <th>Time</th>
+          <th>Release</th>
         </tr>
       </thead>
       <tbody>
@@ -31,23 +30,24 @@
               {{ c.commit.committer.date | timeToNow }}
             </time>
           </td>
+          <td>
+            <ReleaseButton :sha="c.sha"></ReleaseButton>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
 </template>
 <script>
+  import ReleaseButton from './Release'
   export default {
     name: 'Releases',
+    components: {
+      ReleaseButton
+    },
     data: () => ({
-      releaseButtonStatus: '',
       commits: []
     }),
-    sockets: {
-      releasing (period) {
-        this.releaseButtonStatus = period
-      }
-    },
     activated () {
       this.load()
     },
@@ -57,16 +57,6 @@
           return null
         }
         return this.commits[0].sha
-      },
-      releasable () {
-        return this.releaseButtonStatus === 'Release'
-      },
-      releaseButtonText () {
-        if (this.releasable) {
-          return 'Release'
-        } else {
-          return this.releaseButtonStatus + '...'
-        }
       }
     },
     methods: {
@@ -78,11 +68,6 @@
         ret = await this.$http.get('/repo/master')
         this.commits = ret.data
 
-      },
-      deploy () {
-        this.$http.post('/repo/release', {
-          sha: this.latestSHA
-        })
       }
     },
     filters: {
