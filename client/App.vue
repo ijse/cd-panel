@@ -12,7 +12,7 @@
       </keep-alive>
     </div>
     <Footer></Footer>
-    <div class="pageloader is-danger is-right-to-left"
+    <div class="pageloader is-danger is-left-to-right"
       style="opacity: .5"
       :class="{ 'is-active': !connected }">
       <span class="title">Connecting...</span>

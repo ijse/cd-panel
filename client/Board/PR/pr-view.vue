@@ -2,10 +2,12 @@
   <div class="quickview" :class="{ 'is-active': isActive }">
     <template v-if="data">
       <header class="quickview-header">
-        <h2 class="title has-text-weight-bold has-text-centered">
+        <p class="has-text-weight-bold has-text-centered">
           PR #{{data.number}} by {{ data.user.login }}
-        </h2>
-        <span class="delete" @click="$emit('close')"></span>
+        </p>
+        <div class="tooltip is-tooltip-left" data-tooltip="ESC to close">
+          <span class="delete" @click="$emit('close')"></span>
+        </div>
       </header>
       <div class="quickview-body">
         <a :href="data.html_url" target="_blank"
