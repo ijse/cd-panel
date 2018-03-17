@@ -132,4 +132,7 @@ export default {
       font-size: .8em;
     }
   }
+  .quickview-footer {
+    background-color: unset;
+  }
 </style>
