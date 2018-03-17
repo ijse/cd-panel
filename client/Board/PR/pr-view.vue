@@ -16,6 +16,12 @@
 
         <table class="table is-fullwidth is-narrow">
           <tr>
+            <th> <small>Status </small></th>
+            <td>
+              <BuildStats :data="data"></BuildStats>
+            </td>
+          </tr>
+          <tr>
             <th> <small>Branch</small> </th>
             <td> <code>{{ data.head.ref }}</code></td>
           </tr>
@@ -46,14 +52,32 @@
           </tr>
         </table>
       </div>
+      <div class="quickview-footer">
+        <RestartButton :data="data"></RestartButton>
+        <DeployButton :data="data"
+          :class="{ tooltip: !data.isApproved }"
+          class="is-tooltip-danger is-up"
+          data-tooltip="Not Approved"></DeployButton>
+        <MergeButton :data="data"></MergeButton>
+      </div>
     </template>
   </div>
 </template>
 <script>
 import moment from 'moment'
+import DeployButton from './DeployButton'
+import MergeButton from './MergeButton'
+import BuildStats from './BuildStats'
+import RestartButton from './RestartButton'
 
 export default {
   name: 'PRView',
+  components: {
+    DeployButton,
+    MergeButton,
+    RestartButton,
+    BuildStats
+  },
   props: {
     data: Object
   },
