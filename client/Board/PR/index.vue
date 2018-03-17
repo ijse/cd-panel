@@ -13,7 +13,7 @@
           <p class="has-text-centered">Empty for now.</p>
         </td>
       </tr>
-      <tr v-for="mr in list">
+      <tr v-for="mr in list" :class="{ 'is-selected': mr === selectedPR }">
         <td @click.prevent.stop="selectedPR = mr">
           <a :href="mr.html_url" target="_blank">
             <strong>#{{ mr.number }}</strong> {{ mr.title }}
