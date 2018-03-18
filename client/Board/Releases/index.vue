@@ -1,7 +1,10 @@
 <template>
   <div class="releases">
     <section>
-      <ReleaseButton :sha="latestSHA"></ReleaseButton>
+      <ReleaseButton :sha="latestSHA"
+        class="tooltip"
+        data-tooltip="Release All"
+        ></ReleaseButton>
     </section>
     <table class="table is-fullwidth is-hoverable">
       <thead>
