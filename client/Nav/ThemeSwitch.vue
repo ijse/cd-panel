@@ -18,6 +18,7 @@
   </div>
 </template>
 <script>
+  import UpdateCSSVar from './update-css.js'
   export default {
     name: 'ThemeSwitch',
     data: () => ({
@@ -54,12 +55,14 @@
           name,
           style: `https://jenil.github.io/bulmaswatch/${name.toLowerCase()}/bulmaswatch.min.css`
         }))
+      },
+      loader () {
+        return document.querySelector('body>.pageloader')
       }
     },
     methods: {
       switchTheme (theme) {
-        document.body.style.opacity = 0
-        document.body.style.visibility = 'hidden'
+        this.loader.classList.add('is-active')
 
         localStorage.setItem('theme', theme.name)
         this.themeOn = false
@@ -69,22 +72,20 @@
         const newLink = document.createElement('link')
         newLink.setAttribute('rel', 'stylesheet')
         newLink.setAttribute('type', 'text/css')
-        newLink.setAttribute('href', theme.style)
         newLink.setAttribute('theme', true)
+        newLink.setAttribute('href', theme.style)
+
         newLink.onload = () => {
-        document.body.style.visibility = 'visible'
-          document.body.style.opacity = 1
+          this.loader.classList.remove('is-active')
+          head.removeChild(oldLink)
+          UpdateCSSVar()
         }
-        head.replaceChild(newLink, oldLink)
+        head.appendChild(newLink)
       }
     }
   }
 </script>
 <style>
-  body {
-    opacity: 0;
-    transition: opacity .5s;
-  }
   .navbar .navbar-dropdown {
     max-height: 500px;
     overflow: auto;

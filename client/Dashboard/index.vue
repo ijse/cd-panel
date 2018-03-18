@@ -17,15 +17,21 @@
     name: 'Dashboard',
     sockets: {
       'stats-refresh' (data) {
-        this.statsList = data || {}
+        Object.keys(this.statsList).forEach(name => {
+          this.$set(this.statsList, name, data[name] || 0)
+        })
       }
     },
     data: () => ({
       statsList: {
-        prCount: 0,
-        visitCount: 0,
-        deployCount: 0,
-        queueSize: 0
+        'pr count': 0,
+        'queue size': 0,
+        'Online': 0,
+        'Visit': 0,
+        'Build Time': 0,
+        'Run Tasks': 0,
+        'Deploy Time': 0,
+        'releases': 0
       }
     }),
     created () {
