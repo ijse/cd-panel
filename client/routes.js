@@ -5,10 +5,13 @@ import Queue from './Queue'
 import Journal from './Journal'
 import Setting from './Setting'
 import Monitor from './Monitor'
+import Login from './Login'
 
 const routes = [
   { name: 'Dashboard',
     path: '/', component: Dashboard },
+  { name: 'Login',
+    path: '/login', component: Login },
   { name: 'Board',
     path: '/board', component: Board },
   { name: 'Queue',

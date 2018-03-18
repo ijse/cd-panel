@@ -21,8 +21,7 @@
         <main-router-link to="/help" class="navbar-item"> Help </main-router-link>
       </div>
       <div class="navbar-end">
-        <span class="navbar-item has-text-danger" v-if="!connected"> Connecting...  </span>
-        <a class="navbar-item has-text-info" v-else>
+        <a class="navbar-item has-text-info">
           <span class="icon"><i class="fab fa-github"></i></span>
           tigerbrokers/gem
         </a>
@@ -43,17 +42,8 @@
       ThemeSwitch
     },
     data: () => ({
-      burgerOn: false,
-      connected: false
-    }),
-    sockets: {
-      connect () {
-        this.connected = true
-      },
-      disconnect () {
-        this.connected = false
-      }
-    }
+      burgerOn: false
+    })
   }
 </script>
 <style scoped>
