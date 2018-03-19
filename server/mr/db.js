@@ -36,6 +36,7 @@ class MR extends Emitter {
 
       // merge with old
       item.buildStats = old.buildStats || 'Waiting'
+      item.testStats = old.testStats || 'dev'
       return item
     })
     db.set('list', newList).write()

@@ -81,7 +81,7 @@ class Build extends Emitter {
     const repoExist = shelljs.test('-d', join(this.workspace, '.git'))
     let cmd = !repoExist ?
       // first download
-      `git clone -b ${this.branch} ${this.repoUrl} .`
+      `git clone ${this.repoUrl} . && git checkout ${this.branch}`
       // update
       : `git fetch && git reset --hard FETCH_HEAD && git clean -df `
 

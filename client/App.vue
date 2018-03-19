@@ -12,7 +12,11 @@
       </keep-alive>
     </div>
     <Footer></Footer>
-    <div class="is-overlay lock-shade" v-show="!connected"></div>
+    <div class="pageloader is-danger is-left-to-right"
+      style="opacity: .5"
+      :class="{ 'is-active': !connected }">
+      <span class="title">Connecting...</span>
+    </div>
   </section>
 </template>
 
@@ -36,12 +40,17 @@ export default {
   data () {
     return {
       connected: false,
+      loading: false,
       msg: 'hello world'
     }
   }
 }
 </script>
 <style>
+  @import "bulma-tooltip/dist/bulma-tooltip.min.css";
+  @import "bulma-pageloader/dist/bulma-pageloader.min.css";
+  @import "bulma-quickview/dist/bulma-quickview.min.css";
+
   html, body {
     height: 100%;
   }
@@ -56,10 +65,6 @@ export default {
   }
   [v-cloak] {
     display: none;
-  }
-  .lock-shade {
-    background-color: currentColor;
-    opacity: .1;
   }
 </style>
 
