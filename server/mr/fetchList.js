@@ -18,6 +18,8 @@ async function updateReviewStatus(pr) {
   data
     // since last update
     .filter(d => - (new Date(pr.updated_at)) + (new Date(d.submitted_at)))
+    .filter(d => d.user.login !== pr.user.login)
+    .filter(d => d.state !== 'COMMENTED')
     .forEach(d => reviewResult[d.user.login] = d.state === 'APPROVED')
 
   const reviewers = Object.keys(reviewResult)
