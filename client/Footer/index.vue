@@ -4,6 +4,10 @@
       <div class="content">
         <SocketStatus></SocketStatus>
         <Version></Version>
+        <a class="has-text-info is-pulled-right">
+          <span class="icon"><i class="fab fa-github"></i></span>
+          tigerbrokers/gem
+        </a>
       </div>
     </div>
   </footer>

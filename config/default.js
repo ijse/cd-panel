@@ -13,8 +13,8 @@ const config = {
     repo: 'gem'
   },
   users: [{
-    username: 'ijse',
-    password: '123'
+    username: 'admin',
+    password: 'tiger'
   }],
   execTimeout: 3 * 60 * 1000,
   dataDir: path.join(os.homedir(), '.cdpanel'),

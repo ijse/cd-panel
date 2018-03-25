@@ -20,7 +20,7 @@ module.exports = app => {
     }
   })
 
-  app.router.post('/repo/merge', async ctx => {
+  app.router.post('/repo/merge', app.auth, async ctx => {
     const { number } = ctx.request.body
     try {
       const ret = await github.pullRequests.merge({
@@ -40,7 +40,7 @@ module.exports = app => {
     ctx.body = { status: releaseStatus }
   })
 
-  app.router.post('/repo/release', async ctx => {
+  app.router.post('/repo/release', app.auth, async ctx => {
     if (release) {
       ctx.status = 501
       return

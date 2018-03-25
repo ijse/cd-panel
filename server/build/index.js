@@ -14,7 +14,7 @@ module.exports = function () {
     this.io.emit('mr.buildStats', [number, stats])
   })
 
-  this.router.post('/restart', async ctx => {
+  this.router.post('/restart', this.auth, async ctx => {
     const { number } = ctx.request.body
     const pr = mr.find({ number })
 
@@ -22,7 +22,7 @@ module.exports = function () {
     ctx.body = service.createBuild(pr.number)
   })
 
-  this.router.post('/deploy', async ctx => {
+  this.router.post('/deploy', this.auth, async ctx => {
     const { number, target } = ctx.request.body
     const pr = mr.find({ number })
 

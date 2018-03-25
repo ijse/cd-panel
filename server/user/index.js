@@ -34,7 +34,19 @@ module.exports = app => {
   app.router.post('/login',
     passport.authenticate('local'),
     async ctx => {
-      const isAuth = ctx.isAuthenticated()
       ctx.status = 200
     })
+
+  app.router.get('/user', async ctx => {
+    if (ctx.isAuthenticated()) {
+      let user = ctx.state.user
+      ctx.body = { username: user.username }
+    }
+    ctx.status = 200
+  })
+
+  app.router.get('/logout', ctx => {
+    ctx.logout()
+    ctx.status = 200
+  })
 }

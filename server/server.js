@@ -45,11 +45,19 @@ app.router.get('/*', async (ctx, next) => {
 
 const session = require('koa-session')
 app.keys = ['secret']
-app.use(session({}, app))
+app.use(session(app))
 
 const passport = require('koa-passport')
 app.use(passport.initialize())
 app.use(passport.session())
+
+app.auth = (ctx, next) => {
+  if (ctx.isAuthenticated()) {
+    return next()
+  } else {
+    ctx.throw(401)
+  }
+}
 
 // load services
 require('./setting').call(app, app)

@@ -21,10 +21,7 @@
         <main-router-link to="/help" class="navbar-item"> Help </main-router-link>
       </div>
       <div class="navbar-end">
-        <a class="navbar-item has-text-info">
-          <span class="icon"><i class="fab fa-github"></i></span>
-          tigerbrokers/gem
-        </a>
+        <Account class="navbar-item"></Account>
         <ThemeSwitch></ThemeSwitch>
       </div>
     </div>
@@ -34,10 +31,12 @@
 <script>
   import MainRouterLink from './MainRouterLink'
   import ThemeSwitch from './ThemeSwitch'
+  import Account from './Account'
 
   export default {
     name: 'NavBar',
     components: {
+      Account,
       MainRouterLink,
       ThemeSwitch
     },

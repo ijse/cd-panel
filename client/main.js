@@ -22,6 +22,17 @@ router.afterEach(to => {
 
 Vue.use({
   install (Vue) {
+    axios.interceptors.response.use(resp => {
+      return resp
+    }, err => {
+      const response = err.response
+      if (response.url === '/login') {
+        return
+      }
+      if (response.status === 401) {
+        router.push('/login')
+      }
+    })
     Vue.prototype.$http = axios
     Vue.filter('timeToNow', dateStr => {
       return moment(dateStr).fromNow()

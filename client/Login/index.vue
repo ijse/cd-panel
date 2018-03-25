@@ -46,11 +46,17 @@
     methods: {
       async login () {
         this.error = false
-        const rest = await this.$http.post('/login', this.user)
+        await this.$http.post('/login', this.user)
+          .then((resp) => {
+            this.error = false
+            if (resp.status === 200) {
+              this.$router.push('/')
+            }
+          })
           .catch(e => {
             this.error = true
           })
-        this.$router.push('/')
+        this.$root.$emit('login')
       }
     }
   }
