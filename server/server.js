@@ -43,6 +43,14 @@ app.router.get('/*', async (ctx, next) => {
   }
 })
 
+const session = require('koa-session')
+app.keys = ['secret']
+app.use(session({}, app))
+
+const passport = require('koa-passport')
+app.use(passport.initialize())
+app.use(passport.session())
+
 // load services
 require('./setting').call(app, app)
 require('./mr').call(app, app)
@@ -52,6 +60,7 @@ require('./build').call(app, app)
 require('./stats').call(app, app)
 require('./monitor').call(app, app)
 require('./repo').call(app, app)
+require('./user').call(app, app)
 
 app.use(app.router.routes())
 

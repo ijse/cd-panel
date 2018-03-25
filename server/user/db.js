@@ -6,14 +6,21 @@ class User extends Base {
   }
 
   add (user) {
+    if (this.findByName(user.username)) return
     this.db.get('list')
-      .push(user)
+      .insert(user)
       .write()
   }
 
+  findById (id) {
+    return this.db.get('list')
+      .find(u => u.id === id)
+      .value()
+  }
+
   findByName (name) {
-    return  this.db.get('list')
-      .find(u => u.name === name)
+    return this.db.get('list')
+      .find(u => u.username === name)
       .value()
   }
 }
