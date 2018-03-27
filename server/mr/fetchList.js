@@ -15,14 +15,18 @@ async function updateReviewStatus(pr) {
   // const reviewers = pr.requested_reviewers.map(r => r.login)
 
   const reviewResult = {}
-  data
+  const tss = data
     // since last update
     .filter(d => - (new Date(pr.updated_at)) + (new Date(d.submitted_at)))
     .filter(d => d.user.login !== pr.user.login)
     .filter(d => d.state !== 'COMMENTED')
-    .forEach(d => reviewResult[d.user.login] = d.state === 'APPROVED')
+    .filter(d => d.state !== 'DISMISSED')
+  tss.forEach(d => reviewResult[d.user.login] = d.state === 'APPROVED')
 
   const reviewers = Object.keys(reviewResult)
+  // if (pr.number === 3070) {
+    // console.log(tss, reviewers, reviewResult)
+  // }
   pr.isApproved = !!reviewers.length && reviewers.every(r => reviewResult[r])
 
   return pr
