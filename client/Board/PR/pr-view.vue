@@ -131,6 +131,10 @@ export default {
     & .table th {
       font-size: .8em;
     }
+    & .content pre {
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
   }
   .quickview-footer {
     background-color: unset;
