@@ -32,6 +32,7 @@
   </div>
 </template>
 <script>
+  import Cookies from 'js-cookie'
   export default {
     name: 'Login',
     data: () => ({
@@ -50,6 +51,7 @@
           .then((resp) => {
             this.error = false
             if (resp.status === 200) {
+              Cookies.set('user', this.user, { expires: 3 })
               this.$router.push('/')
             }
           })

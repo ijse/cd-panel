@@ -6,6 +6,7 @@ import routes from './routes'
 import VueSocketIo from 'vue-socket.io'
 import moment from 'moment'
 import Notification from 'vue-native-notification'
+import Cookies from 'js-cookie'
 
 Vue.use(VueSocketIo, '/')
 Vue.use(Router)
@@ -13,6 +14,15 @@ const router = new Router({
   linkActiveClass: 'is-active',
   mode: 'history',
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.name === 'Login') return next()
+  if (!Cookies.get('user')) {
+    next('/login')
+  } else {
+    next()
+  }
 })
 
 // set page title

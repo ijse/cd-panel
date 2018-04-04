@@ -47,6 +47,7 @@ module.exports = app => {
 
   app.router.get('/logout', ctx => {
     ctx.logout()
+    ctx.cookies.set('user', null, { maxAge: -1 })
     ctx.status = 200
   })
 }
