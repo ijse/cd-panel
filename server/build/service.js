@@ -120,6 +120,18 @@ exports.makeRelease = (head) => {
   return release
 }
 
+exports.makePreRelease = head => {
+  const release = new Build('master', head)
+  release.download()
+    .then(() => release.prepare())
+    .then(() => release.build())
+    .then(() => release.deploy({
+      target: 'staging'
+    }))
+    .catch(() => release.emit('status', 'fail'))
+  return release
+}
+
 exports.closePR = async number => {
   // check if exist task for this number
   if (queue.current && queue.current.number === number) {

@@ -69,4 +69,34 @@ module.exports = app => {
     statsDB.increase('releases')
     ctx.status = 200
   })
+
+  app.router.post('/repo/master/deploy', app.auth, async ctx => {
+    if (release) {
+      ctx.status = 501
+      return
+    }
+
+    const { data: repo } = await github.repos.get({
+      ...github.$repo
+    })
+
+    const { sha } = ctx.request.body
+    const { data: refData } = await github.repos.getCommit({
+      ...github.$repo,
+      sha
+    })
+    refData.repo = repo
+    refData.ref = sha
+    release = service.makePreRelease(refData)
+    release.on('status', stats => {
+      releaseStatus = stats
+      if (stats === 'success' || stats === 'fail') {
+        releaseStatus = 'Release'
+        release = null
+      }
+      app.io.emit('prereleasing', [releaseStatus, sha])
+    })
+    statsDB.increase('prereleases')
+    ctx.status = 200
+  })
 }
