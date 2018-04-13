@@ -1,7 +1,7 @@
 const Base = require('app/server/db').Base
 
 // keep the last 5 data
-const SIZE = 5
+const SIZE = 50
 
 class Cache extends Base {
   get defaults () {
