@@ -13,8 +13,8 @@
     },
     computed: {
       isDisabled () {
-        return this.data.buildStats !== 'Ready' ||
-          !this.data.isApproved
+        return this.data.buildStats !== 'Ready' // ||
+          // !this.data.isApproved
       }
     },
     methods: {
