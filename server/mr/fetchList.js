@@ -53,11 +53,13 @@ async function updateReviewStatus(pr) {
       ...team[login]
     }))
 
+  /*
   if (pr.number === 3286) {
     console.log('>>>>', data)
     console.log(reviewStatus, unreviewers)
     console.log('>>>', pr.requested_reviewers)
   }
+  */
 
   /*
   const unreviewers = Array.from(reviewStatus)
