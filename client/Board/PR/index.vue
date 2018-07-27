@@ -14,7 +14,7 @@
         </td>
       </tr>
       <tr v-for="mr in list" :class="{ 'is-selected': mr === selectedPR }">
-        <td @click.prevent.stop="selectedPR = mr">
+        <td @click.self="selectedPR = mr">
           <a :href="mr.html_url" target="_blank">
             <strong>#{{ mr.number }}</strong> {{ mr.title }}
           </a>
@@ -25,9 +25,9 @@
           </div>
           <footer>
             <small>
-              <a :href="mr.user.html_url" target="_blank">
+              <a :href="mr.user.ding | ding">
                 <img :src="mr.user.avatar_url" class="avatar" />
-                {{ mr.user.login }}
+                {{ mr.user.name }}
               </a>
               update
               <time :datetime="mr.updated_at" :title="mr.updated_at | format">

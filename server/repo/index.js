@@ -1,6 +1,7 @@
 const github = require('app/server/github')
 const service = require('app/server/build/service')
 const statsDB = require('app/server/stats/db')
+const team = require('config').team
 
 module.exports = app => {
   let cached = null
@@ -10,6 +11,13 @@ module.exports = app => {
       sha: 'heads/master'
     })
     .then(ret => {
+      ret.data.map(c => {
+        c.author = {
+          ...c.author,
+          ...team[c.author.login]
+        }
+        return c
+      })
       if (!cached) ctx.body = ret.data
       cached = ret.data
     })

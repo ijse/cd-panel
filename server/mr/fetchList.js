@@ -2,6 +2,7 @@ const db = require('./db')
 const github = require('../github')
 const setting = require('../setting/db')
 const statsDB = require('app/server/stats/db')
+const team = require('config').team
 
 // check pr review status
 
@@ -26,14 +27,18 @@ async function updateReviewStatus(pr) {
   const reviewStatus = {}
   data.map(t => ({
     login: t.user.login,
-    state: t.state
+    state: t.state,
+    ...team[t.user.login]
   })).forEach(user => {
-    reviewStatus[user.login] = user.state
+    reviewStatus[user.login] = user
   })
 
   const unreviewers = Object.entries(reviewStatus)
-    .filter(([login, state]) => state !== 'APPROVED')
-    .map(([login, state]) => ({ login, state }))
+    .filter(([login, { state }]) => state !== 'APPROVED')
+    .map(([login, { state }]) => ({
+      state,
+      ...team[login]
+    }))
 
   /*
   if (pr.number === 3285) {
@@ -70,6 +75,7 @@ module.exports = async function () {
   const newList = []
   for(let pr of result.data) {
     newList.push(await updateReviewStatus(pr))
+    pr.user = { ...pr.user, ...team[pr.user.login] }
   }
   db.list = newList
 

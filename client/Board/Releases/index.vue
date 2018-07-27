@@ -23,9 +23,9 @@
             </a>
           </td>
           <td>
-            <a :href="c.author.html_url" target="_blank">
+            <a :href="c.author.ding | ding">
               <img :src="c.author.avatar_url" class="avatar" />
-              {{ c.author.login }}
+              {{ c.author.name }}
             </a>
           </td>
           <td>

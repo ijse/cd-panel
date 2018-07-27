@@ -3,7 +3,7 @@
     <template v-if="data">
       <header class="quickview-header">
         <p class="has-text-weight-bold has-text-centered">
-          PR #{{data.number}} by {{ data.user.login }}
+          PR #{{data.number}} by {{ data.user.name }}
         </p>
         <div class="tooltip is-tooltip-left" data-tooltip="ESC to close">
           <span class="delete" @click="$emit('close')"></span>
@@ -33,11 +33,12 @@
           <tr>
             <th> Reviewers </th>
             <td class="tags">
-              <span class="tag tooltip" :key="name" :data-tooltip="state" style="cursor: pointer;"
+              <a class="tag tooltip" :key="name" :data-tooltip="state" style="cursor: pointer;"
                 :class="{ 'has-text-danger': state !== 'APPROVED', 'has-text-success': state === 'APPROVED' }"
-                v-for="(state, name) in data.reviewers">
+                :href="ding | ding"
+                v-for="({state, ding, name}, login) in data.reviewers">
                 {{ name }}
-              </span>
+              </a>
             </td>
           </tr>
           <tr>

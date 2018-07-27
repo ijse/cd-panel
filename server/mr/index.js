@@ -2,18 +2,7 @@ const mrdb = require('./db')
 const fetchList = require('./fetchList')
 const axios = require('axios')
 
-
-const team = {
-    ijse: { login: 'ijse', name: '李毅' },
-    liushumei: { login: 'liushumei', name: '刘淑美' },
-    'wang-jia': { login: 'wang-jia', name: '王佳' },
-    'gao-jx': { login: 'gao-jx', name: '高建勋' },
-    'JeannieMa': { login: 'JeannieMa', name: '马柳菁' },
-    'pengcui123': { login: 'pengcui123', name: '彭翠' },
-    'zhangsundanfeng': { login: 'zhangsundanfeng', name: '长孙丹凤' },
-    'huihongzhou': { login: 'huihongzhou', name: '周汇虹' }
-}
-
+const team = require('config').team
 
 module.exports = function () {
   fetchList()

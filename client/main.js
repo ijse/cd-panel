@@ -25,6 +25,10 @@ router.beforeEach((to, from, next) => {
   }
 })
 
+Vue.filter('ding', id => {
+  return `dingtalk://dingtalkclient/action/sendmsg?dingtalk_id=${id}`
+})
+
 // set page title
 router.afterEach(to => {
   document.title = to.name + ' | cd-panel'
