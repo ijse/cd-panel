@@ -10,7 +10,8 @@ async function updateReviewStatus(pr) {
   const { data } = await github.pullRequests
     .getReviews({
       ...github.$repo,
-      number: pr.number
+      number: pr.number,
+      per_page: 100
     })
 
   // const reviewers = pr.requested_reviewers.map(r => r.login)
@@ -29,9 +30,11 @@ async function updateReviewStatus(pr) {
     login: t.user.login,
     state: t.state,
     ...team[t.user.login]
-  })).forEach(user => {
-    reviewStatus[user.login] = user
-  })
+  }))
+    .filter(d => d.login !== pr.user.login)
+    .forEach(user => {
+      reviewStatus[user.login] = user
+    })
 
   const unreviewers = Object.entries(reviewStatus)
     .filter(([login, { state }]) => state !== 'APPROVED')
@@ -40,10 +43,12 @@ async function updateReviewStatus(pr) {
       ...team[login]
     }))
 
-  /*
-  if (pr.number === 3285) {
+  if (pr.number === 3250) {
+    console.log('>>>>', data)
     console.log(reviewStatus, unreviewers)
   }
+
+  /*
   const unreviewers = Array.from(reviewStatus)
     .filter(t => t.state !== 'APPROVED')
   */

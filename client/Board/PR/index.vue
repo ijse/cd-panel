@@ -14,7 +14,7 @@
         </td>
       </tr>
       <tr v-for="mr in list" :class="{ 'is-selected': mr === selectedPR }">
-        <td @click.self="selectedPR = mr">
+        <td @click="selectedPR = mr">
           <a :href="mr.html_url" target="_blank">
             <strong>#{{ mr.number }}</strong> {{ mr.title }}
           </a>
