@@ -40,6 +40,7 @@
         </td>
         <td>
           <RestartButton :data="mr"></RestartButton>
+          <RequestReview :data="mr"/>
           <DeployButton :data="mr"
             :class="{ tooltip: !mr.isApproved }"
             class="is-tooltip-danger"
@@ -59,6 +60,7 @@
   import MergeButton from './MergeButton'
   import BuildStats from './BuildStats'
   import RestartButton from './RestartButton'
+  import RequestReview from './RequestReview'
   import moment from 'moment'
   import PRView from './pr-view'
 
@@ -69,6 +71,7 @@
       DeployButton,
       MergeButton,
       RestartButton,
+      RequestReview,
       BuildStats
     },
     data: () => ({
