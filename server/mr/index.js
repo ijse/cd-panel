@@ -2,6 +2,19 @@ const mrdb = require('./db')
 const fetchList = require('./fetchList')
 const axios = require('axios')
 
+
+const team = {
+    ijse: { login: 'ijse', name: '李毅' },
+    liushumei: { login: 'liushumei', name: '刘淑美' },
+    'wang-jia': { login: 'wang-jia', name: '王佳' },
+    'gao-jx': { login: 'gao-jx', name: '高建勋' },
+    'JeannieMa': { login: 'JeannieMa', name: '马柳菁' },
+    'pengcui123': { login: 'pengcui123', name: '彭翠' },
+    'zhangsundanfeng': { login: 'zhangsundanfeng', name: '长孙丹凤' },
+    'huihongzhou': { login: 'huihongzhou', name: '周汇虹' }
+}
+
+
 module.exports = function () {
   fetchList()
 
@@ -15,16 +28,23 @@ module.exports = function () {
   })
 
   this.router.post('/request-review', async ctx => {
-    const { title, user, html_url, number } = ctx.request.body
+    const { title, user, html_url, number, requested_reviewers } = ctx.request.body
 
-    const msg = `QA嗺大家Review代码: \n #${number}-${title}(by ${user.login}) \n ${html_url}\n`
+    console.log(ctx.request.body.isApproved)
+
+    const reviewers = requested_reviewers
+      .map(r => r.login)
+      .map(name => '@' + team[name].name)
+      .join(',')
+
+    const msg = `QA催大家Review代码: \n #${number}-${title}(by ${team[user.login].name}) \n ${html_url}\n ${reviewers}`
 
     await axios.post('http://bot.ijser.cn/api/ding', {
       msg,
       to: 'fe',
-      atAll: true
+      atAll: false
     })
 
-    ctx.body = 'ok'
+    ctx.body = msg
   })
 }

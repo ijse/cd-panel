@@ -21,8 +21,8 @@
     },
     methods: {
       async request () {
-        await this.$http.post('/request-review', this.data)
-        window.alert('Review request sent to dingtalk.')
+        const { data: msg } = await this.$http.post('/request-review', this.data)
+        window.alert([ "消息:", msg, "已经发送!"].join('\n\n'))
       }
     }
   }

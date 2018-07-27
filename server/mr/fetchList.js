@@ -24,10 +24,14 @@ async function updateReviewStatus(pr) {
   tss.forEach(d => reviewResult[d.user.login] = d.state === 'APPROVED')
 
   const reviewers = Object.keys(reviewResult)
-  // if (pr.number === 3070) {
+  // if (pr.number === 3279) {
     // console.log(tss, reviewers, reviewResult)
+    // console.log(pr.requested_reviewers)
   // }
-  pr.isApproved = !!reviewers.length && reviewers.every(r => reviewResult[r])
+
+  // pr.isApproved = !!reviewers.length && reviewers.every(r => reviewResult[r])
+    //
+  pr.isApproved = pr.requested_reviewers.length === 0
 
   return pr
 }

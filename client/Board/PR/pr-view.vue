@@ -31,9 +31,9 @@
             <td> <code>{{ data.head.ref }}</code></td>
           </tr>
           <tr>
-            <th> Reviewers </th>
+            <th> Requested Reviewers </th>
             <td class="tags">
-              <span class="tag"
+              <span class="tag" :key="user.login"
                 v-for="user in data.requested_reviewers">
                 {{ user.login }}
               </span>
