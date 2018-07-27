@@ -31,11 +31,12 @@
             <td> <code>{{ data.head.ref }}</code></td>
           </tr>
           <tr>
-            <th> Requested Reviewers </th>
+            <th> Reviewers </th>
             <td class="tags">
-              <span class="tag" :key="user.login"
-                v-for="user in data.requested_reviewers">
-                {{ user.login }}
+              <span class="tag tooltip" :key="name" :data-tooltip="state" style="cursor: pointer;"
+                :class="{ 'has-text-danger': state !== 'APPROVED', 'has-text-success': state === 'APPROVED' }"
+                v-for="(state, name) in data.reviewers">
+                {{ name }}
               </span>
             </td>
           </tr>

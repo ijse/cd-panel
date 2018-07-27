@@ -28,11 +28,9 @@ module.exports = function () {
   })
 
   this.router.post('/request-review', async ctx => {
-    const { title, user, html_url, number, requested_reviewers } = ctx.request.body
+    const { title, user, html_url, number, unreviewers } = ctx.request.body
 
-    console.log(ctx.request.body.isApproved)
-
-    const reviewers = requested_reviewers
+    const reviewers = unreviewers
       .map(r => r.login)
       .map(name => '@' + team[name].name)
       .join(',')
