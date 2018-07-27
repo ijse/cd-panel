@@ -16,6 +16,7 @@ async function updateReviewStatus(pr) {
 
   // const reviewers = pr.requested_reviewers.map(r => r.login)
 
+  /*
   const reviewResult = {}
   const tss = data
     // since last update
@@ -24,8 +25,17 @@ async function updateReviewStatus(pr) {
     .filter(d => d.state !== 'COMMENTED')
     .filter(d => d.state !== 'DISMISSED')
   tss.forEach(d => reviewResult[d.user.login] = d.state === 'APPROVED')
+  */
 
   const reviewStatus = {}
+  pr.requested_reviewers.forEach(user => {
+    reviewStatus[user.login] = {
+      login: user.login,
+      state: 'UNREVIEWED',
+      ...team[user.login]
+    }
+  })
+
   data.map(t => ({
     login: t.user.login,
     state: t.state,
@@ -43,9 +53,10 @@ async function updateReviewStatus(pr) {
       ...team[login]
     }))
 
-  if (pr.number === 3250) {
+  if (pr.number === 3286) {
     console.log('>>>>', data)
     console.log(reviewStatus, unreviewers)
+    console.log('>>>', pr.requested_reviewers)
   }
 
   /*
