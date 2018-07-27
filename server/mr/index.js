@@ -21,7 +21,7 @@ module.exports = function () {
 
     await axios.post('http://bot.ijser.cn/api/ding', {
       msg,
-      to: 'feed',
+      to: 'fe',
       atAll: true
     })
 
