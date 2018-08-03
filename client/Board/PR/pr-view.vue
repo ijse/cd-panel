@@ -44,7 +44,7 @@
           <tr>
             <th width="100"> Create At </th>
             <td>
-              <time datetime="data.update_at" title="data.created_at">
+              <time :datetime="data.created_at" :title="data.created_at">
                 {{ data.created_at | datetime}}
               </time>
             </td>
@@ -52,8 +52,8 @@
           <tr>
             <th width="100"> Update At </th>
             <td>
-              <time datetime="data.update_at" title="data.update_at">
-                {{ data.update_at | toNow }}
+              <time :datetime="data.updated_at" :title="data.updated_at">
+                {{ data.updated_at | toNow }}
               </time>
             </td>
           </tr>
